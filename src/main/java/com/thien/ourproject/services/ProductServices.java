@@ -43,4 +43,20 @@ public class ProductServices {
             return session.get(Product.class, id);
         }
     }
+    
+    public boolean addOrSaveProduct(Product product) {
+        try (Session session = factory.openSession()) {
+            try {
+                session.getTransaction().begin();
+                session.saveOrUpdate(product);
+                session.getTransaction().commit();
+            } catch (Exception ex) {
+                session.getTransaction().rollback();
+                return false;
+            }
+            }
+            
+        
+        return true;
+    }
 }

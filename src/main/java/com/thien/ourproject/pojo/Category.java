@@ -7,6 +7,7 @@ package com.thien.ourproject.pojo;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -101,28 +102,20 @@ public class Category implements Serializable {
     }
 
     @Override
+    public boolean equals(Object object) {
+        Category cat = (Category) object;
+        return this.id == cat.id;
+    }
+
+    @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 5;
+        hash = 23 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Category)) {
-            return false;
-        }
-        Category other = (Category) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
     public String toString() {
-        return "com.ntnt.pojo.Category[ id=" + id + " ]";
+        return String.valueOf(this.id);
     }
-    
 }
