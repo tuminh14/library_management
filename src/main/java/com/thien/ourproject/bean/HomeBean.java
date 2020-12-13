@@ -6,9 +6,7 @@
 package com.thien.ourproject.bean;
 
 import com.thien.ourproject.pojo.Category;
-import com.thien.ourproject.pojo.Product;
 import com.thien.ourproject.services.CategoryServices;
-import com.thien.ourproject.services.ProductServices;
 
 import java.util.List;
 import javax.inject.Named;
@@ -42,8 +40,6 @@ public class HomeBean {
         this.kw = kw;
     }
 
-    
-
     /**
      * Creates a new instance of HomeBean
      */
@@ -53,20 +49,8 @@ public class HomeBean {
     public List<Category> getCategories() {
         return new CategoryServices().getCates();
     }
+    
 
-    public List<Product> getProducts() {
 
-        String cateId = FacesContext.getCurrentInstance()
-                .getExternalContext()
-                .getRequestParameterMap()
-                .get("cateId");
-
-        if (cateId != null && !cateId.isEmpty()) {
-            Category c = new CategoryServices().getCateById(cateId);
-
-            return (List<Product>) c.getProductCollection();
-        }
-        return new ProductServices().getProducts(this.kw);
-    }
 
 }

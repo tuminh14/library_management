@@ -6,10 +6,6 @@
 package com.thien.ourproject.services;
 
 import com.thien.ourproject.pojo.Category;
-import com.thien.ourproject.pojo.OrderDetail;
-import com.thien.ourproject.pojo.Product;
-import com.thien.ourproject.pojo.SaleOrder;
-import com.thien.ourproject.pojo.User;
 import java.util.Properties;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -30,15 +26,11 @@ public class HibernateUtils {
         Configuration conf = new Configuration();
 
         conf.addAnnotatedClass(Category.class);
-        conf.addAnnotatedClass(Product.class);
-        conf.addAnnotatedClass(User.class);
-        conf.addAnnotatedClass(SaleOrder.class);
-        conf.addAnnotatedClass(OrderDetail.class);
-
+        
         Properties props = new Properties();
         props.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
         props.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-        props.put(Environment.URL, "jdbc:mysql://localhost/saledb");
+        props.put(Environment.URL, "jdbc:mysql://localhost/library_management");
         props.put(Environment.USER, "root");
         props.put(Environment.PASS, "root");
         props.put(Environment.SHOW_SQL, true);

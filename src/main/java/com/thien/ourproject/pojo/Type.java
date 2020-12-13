@@ -23,62 +23,62 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author nguye
  */
 @Entity
-@Table(name = "category")
+@Table(name = "type")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c"),
-    @NamedQuery(name = "Category.findByCategoryId", query = "SELECT c FROM Category c WHERE c.categoryId = :categoryId"),
-    @NamedQuery(name = "Category.findByClassname", query = "SELECT c FROM Category c WHERE c.classname = :classname")})
-public class Category implements Serializable {
+    @NamedQuery(name = "Type.findAll", query = "SELECT t FROM Type t"),
+    @NamedQuery(name = "Type.findById", query = "SELECT t FROM Type t WHERE t.id = :id"),
+    @NamedQuery(name = "Type.findByBorrowertype", query = "SELECT t FROM Type t WHERE t.borrowertype = :borrowertype")})
+public class Type implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "category_id")
-    private Integer categoryId;
+    @Column(name = "id")
+    private Integer id;
     @Size(max = 50)
-    @Column(name = "classname")
-    private String classname;
+    @Column(name = "borrowertype")
+    private String borrowertype;
 
-    public Category() {
+    public Type() {
     }
 
-    public Category(Integer categoryId) {
-        this.categoryId = categoryId;
+    public Type(Integer id) {
+        this.id = id;
     }
 
-    public Integer getCategoryId() {
-        return categoryId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getClassname() {
-        return classname;
+    public String getBorrowertype() {
+        return borrowertype;
     }
 
-    public void setClassname(String classname) {
-        this.classname = classname;
+    public void setBorrowertype(String borrowertype) {
+        this.borrowertype = borrowertype;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (categoryId != null ? categoryId.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Category)) {
+        if (!(object instanceof Type)) {
             return false;
         }
-        Category other = (Category) object;
-        if ((this.categoryId == null && other.categoryId != null) || (this.categoryId != null && !this.categoryId.equals(other.categoryId))) {
+        Type other = (Type) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -86,7 +86,7 @@ public class Category implements Serializable {
 
     @Override
     public String toString() {
-        return "com.thien.ourproject.pojo.Category[ categoryId=" + categoryId + " ]";
+        return "com.thien.ourproject.pojo.Type[ id=" + id + " ]";
     }
     
 }

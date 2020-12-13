@@ -36,11 +36,17 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-sm-3">
-                        <div class="search_box pull-right">
-                            <input type="text" placeholder="Search"/>
-                        </div>
+                    <h:form>
+                <div class="col-sm-3">
+                    <div class="col-md-10 form-group">
+                        <h:inputText styleClass="form-control" value="search content"></h:inputText>
                     </div>
+                    <div class="col-md-2">
+                        <h:commandButton class="btn btn-danger" value="Search"></h:commandButton>
+                    </div>
+                    
+                </div>
+            </h:form>
                 </div>
             </div>
         </div><!--/header-bottom-->
