@@ -5,7 +5,18 @@
  */
 package com.thien.ourproject.services;
 
+import com.thien.ourproject.pojo.Book;
+import com.thien.ourproject.pojo.BookBorrowed;
+import com.thien.ourproject.pojo.BorrowTracking;
 import com.thien.ourproject.pojo.Category;
+import com.thien.ourproject.pojo.LostBookTracking;
+import com.thien.ourproject.pojo.People;
+import com.thien.ourproject.pojo.Reader;
+import com.thien.ourproject.pojo.ReaderCard;
+import com.thien.ourproject.pojo.ReaderType;
+import com.thien.ourproject.pojo.Staff;
+import com.thien.ourproject.pojo.StaffType;
+import com.thien.ourproject.pojo.Users;
 import java.util.Properties;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -25,8 +36,20 @@ public class HibernateUtils {
     static {
         Configuration conf = new Configuration();
 
-        conf.addAnnotatedClass(Category.class);
         
+        conf.addAnnotatedClass(Book.class);
+//        conf.addAnnotatedClass(BookBorrowed.class);
+//        conf.addAnnotatedClass(BorrowTracking.class);
+        conf.addAnnotatedClass(Category.class);
+//        conf.addAnnotatedClass(LostBookTracking.class);
+//        conf.addAnnotatedClass(People.class);
+//        conf.addAnnotatedClass(Reader.class);
+//        conf.addAnnotatedClass(ReaderCard.class);
+//        conf.addAnnotatedClass(ReaderType.class);
+//        conf.addAnnotatedClass(Staff.class);
+//        conf.addAnnotatedClass(StaffType.class);
+//        conf.addAnnotatedClass(Users.class);
+
         Properties props = new Properties();
         props.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
         props.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");

@@ -6,7 +6,9 @@
 package com.thien.ourproject.pojo;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,22 +16,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author nguye
  */
 @Entity
-@Table(name = "type")
+@Table(name = "staff_type")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Type.findAll", query = "SELECT t FROM Type t"),
-    @NamedQuery(name = "Type.findById", query = "SELECT t FROM Type t WHERE t.id = :id"),
-    @NamedQuery(name = "Type.findByBorrowertype", query = "SELECT t FROM Type t WHERE t.borrowertype = :borrowertype")})
-public class Type implements Serializable {
+    @NamedQuery(name = "StaffType.findAll", query = "SELECT s FROM StaffType s"),
+    @NamedQuery(name = "StaffType.findById", query = "SELECT s FROM StaffType s WHERE s.id = :id"),
+    @NamedQuery(name = "StaffType.findByTypeName", query = "SELECT s FROM StaffType s WHERE s.typeName = :typeName")})
+public class StaffType implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -38,13 +42,15 @@ public class Type implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
-    @Column(name = "borrowertype")
-    private String borrowertype;
+    @Column(name = "type_name")
+    private String typeName;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "typeId")
+    private Collection<Staff> staffCollection;
 
-    public Type() {
+    public StaffType() {
     }
 
-    public Type(Integer id) {
+    public StaffType(Integer id) {
         this.id = id;
     }
 
@@ -56,12 +62,21 @@ public class Type implements Serializable {
         this.id = id;
     }
 
-    public String getBorrowertype() {
-        return borrowertype;
+    public String getTypeName() {
+        return typeName;
     }
 
-    public void setBorrowertype(String borrowertype) {
-        this.borrowertype = borrowertype;
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    @XmlTransient
+    public Collection<Staff> getStaffCollection() {
+        return staffCollection;
+    }
+
+    public void setStaffCollection(Collection<Staff> staffCollection) {
+        this.staffCollection = staffCollection;
     }
 
     @Override
@@ -74,10 +89,10 @@ public class Type implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Type)) {
+        if (!(object instanceof StaffType)) {
             return false;
         }
-        Type other = (Type) object;
+        StaffType other = (StaffType) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -86,7 +101,7 @@ public class Type implements Serializable {
 
     @Override
     public String toString() {
-        return "com.thien.ourproject.pojo.Type[ id=" + id + " ]";
+        return "com.thien.ourproject.pojo.StaffType[ id=" + id + " ]";
     }
     
 }

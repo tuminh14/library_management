@@ -6,7 +6,9 @@
 package com.thien.ourproject.pojo;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,37 +16,36 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author nguye
  */
 @Entity
-@Table(name = "member")
+@Table(name = "people")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Member1.findAll", query = "SELECT m FROM Member1 m"),
-    @NamedQuery(name = "Member1.findByMemberId", query = "SELECT m FROM Member1 m WHERE m.memberId = :memberId"),
-    @NamedQuery(name = "Member1.findByFirstname", query = "SELECT m FROM Member1 m WHERE m.firstname = :firstname"),
-    @NamedQuery(name = "Member1.findByLastname", query = "SELECT m FROM Member1 m WHERE m.lastname = :lastname"),
-    @NamedQuery(name = "Member1.findByGender", query = "SELECT m FROM Member1 m WHERE m.gender = :gender"),
-    @NamedQuery(name = "Member1.findByAddress", query = "SELECT m FROM Member1 m WHERE m.address = :address"),
-    @NamedQuery(name = "Member1.findByContact", query = "SELECT m FROM Member1 m WHERE m.contact = :contact"),
-    @NamedQuery(name = "Member1.findByType", query = "SELECT m FROM Member1 m WHERE m.type = :type"),
-    @NamedQuery(name = "Member1.findByYearLevel", query = "SELECT m FROM Member1 m WHERE m.yearLevel = :yearLevel"),
-    @NamedQuery(name = "Member1.findByStatus", query = "SELECT m FROM Member1 m WHERE m.status = :status")})
-public class Member1 implements Serializable {
+    @NamedQuery(name = "People.findAll", query = "SELECT p FROM People p"),
+    @NamedQuery(name = "People.findById", query = "SELECT p FROM People p WHERE p.id = :id"),
+    @NamedQuery(name = "People.findByFirstname", query = "SELECT p FROM People p WHERE p.firstname = :firstname"),
+    @NamedQuery(name = "People.findByLastname", query = "SELECT p FROM People p WHERE p.lastname = :lastname"),
+    @NamedQuery(name = "People.findByGender", query = "SELECT p FROM People p WHERE p.gender = :gender"),
+    @NamedQuery(name = "People.findByAddress", query = "SELECT p FROM People p WHERE p.address = :address"),
+    @NamedQuery(name = "People.findByContact", query = "SELECT p FROM People p WHERE p.contact = :contact")})
+public class People implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "member_id")
-    private Integer memberId;
+    @Column(name = "id")
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -70,47 +71,33 @@ public class Member1 implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "contact")
     private String contact;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "type")
-    private String type;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "year_level")
-    private String yearLevel;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "status")
-    private String status;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "peopleId")
+    private Collection<Reader> readerCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "people")
+    private Collection<Staff> staffCollection;
 
-    public Member1() {
+    public People() {
     }
 
-    public Member1(Integer memberId) {
-        this.memberId = memberId;
+    public People(Integer id) {
+        this.id = id;
     }
 
-    public Member1(Integer memberId, String firstname, String lastname, String gender, String address, String contact, String type, String yearLevel, String status) {
-        this.memberId = memberId;
+    public People(Integer id, String firstname, String lastname, String gender, String address, String contact) {
+        this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.gender = gender;
         this.address = address;
         this.contact = contact;
-        this.type = type;
-        this.yearLevel = yearLevel;
-        this.status = status;
     }
 
-    public Integer getMemberId() {
-        return memberId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setMemberId(Integer memberId) {
-        this.memberId = memberId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getFirstname() {
@@ -153,45 +140,39 @@ public class Member1 implements Serializable {
         this.contact = contact;
     }
 
-    public String getType() {
-        return type;
+    @XmlTransient
+    public Collection<Reader> getReaderCollection() {
+        return readerCollection;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setReaderCollection(Collection<Reader> readerCollection) {
+        this.readerCollection = readerCollection;
     }
 
-    public String getYearLevel() {
-        return yearLevel;
+    @XmlTransient
+    public Collection<Staff> getStaffCollection() {
+        return staffCollection;
     }
 
-    public void setYearLevel(String yearLevel) {
-        this.yearLevel = yearLevel;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStaffCollection(Collection<Staff> staffCollection) {
+        this.staffCollection = staffCollection;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (memberId != null ? memberId.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Member1)) {
+        if (!(object instanceof People)) {
             return false;
         }
-        Member1 other = (Member1) object;
-        if ((this.memberId == null && other.memberId != null) || (this.memberId != null && !this.memberId.equals(other.memberId))) {
+        People other = (People) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -199,7 +180,7 @@ public class Member1 implements Serializable {
 
     @Override
     public String toString() {
-        return "com.thien.ourproject.pojo.Member1[ memberId=" + memberId + " ]";
+        return "com.thien.ourproject.pojo.People[ id=" + id + " ]";
     }
     
 }

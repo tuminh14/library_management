@@ -2,14 +2,18 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="com.thien_OurProject_war_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>com.thien.ourproject.pojo.Type</class>
-    <class>com.thien.ourproject.pojo.Borrow</class>
-    <class>com.thien.ourproject.pojo.Category</class>
-    <class>com.thien.ourproject.pojo.LostBook</class>
-    <class>com.thien.ourproject.pojo.Borrowdetails</class>
     <class>com.thien.ourproject.pojo.Book</class>
+    <class>com.thien.ourproject.pojo.Category</class>
+    <class>com.thien.ourproject.pojo.StaffType</class>
+    <class>com.thien.ourproject.pojo.ReaderType</class>
+    <class>com.thien.ourproject.pojo.Reader</class>
     <class>com.thien.ourproject.pojo.Users</class>
-    <class>com.thien.ourproject.pojo.Member1</class>
+    <class>com.thien.ourproject.pojo.Staff</class>
+    <class>com.thien.ourproject.pojo.BorrowTracking</class>
+    <class>com.thien.ourproject.pojo.People</class>
+    <class>com.thien.ourproject.pojo.ReaderCard</class>
+    <class>com.thien.ourproject.pojo.BookBorrowed</class>
+    <class>com.thien.ourproject.pojo.LostBookTracking</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/library_management?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

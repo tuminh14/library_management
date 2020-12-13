@@ -6,35 +6,30 @@
 package com.thien.ourproject.pojo;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author nguye
  */
 @Entity
-@Table(name = "category")
+@Table(name = "reader")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c"),
-    @NamedQuery(name = "Category.findById", query = "SELECT c FROM Category c WHERE c.id = :id"),
-    @NamedQuery(name = "Category.findByName", query = "SELECT c FROM Category c WHERE c.name = :name")})
-public class Category implements Serializable {
+    @NamedQuery(name = "Reader.findAll", query = "SELECT r FROM Reader r"),
+    @NamedQuery(name = "Reader.findById", query = "SELECT r FROM Reader r WHERE r.id = :id")})
+public class Reader implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,16 +37,20 @@ public class Category implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 50)
-    @Column(name = "name")
-    private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryId", fetch = FetchType.EAGER)
-    private Collection<Book> bookCollection;
+    @JoinColumn(name = "people_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private People peopleId;
+    @JoinColumn(name = "reader_card_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private ReaderCard readerCardId;
+    @JoinColumn(name = "type_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private ReaderType typeId;
 
-    public Category() {
+    public Reader() {
     }
 
-    public Category(Integer id) {
+    public Reader(Integer id) {
         this.id = id;
     }
 
@@ -63,21 +62,28 @@ public class Category implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public People getPeopleId() {
+        return peopleId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPeopleId(People peopleId) {
+        this.peopleId = peopleId;
     }
 
-    @XmlTransient
-    public Collection<Book> getBookCollection() {
-        return bookCollection;
+    public ReaderCard getReaderCardId() {
+        return readerCardId;
     }
 
-    public void setBookCollection(Collection<Book> bookCollection) {
-        this.bookCollection = bookCollection;
+    public void setReaderCardId(ReaderCard readerCardId) {
+        this.readerCardId = readerCardId;
+    }
+
+    public ReaderType getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(ReaderType typeId) {
+        this.typeId = typeId;
     }
 
     @Override
@@ -90,10 +96,10 @@ public class Category implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Category)) {
+        if (!(object instanceof Reader)) {
             return false;
         }
-        Category other = (Category) object;
+        Reader other = (Reader) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -102,7 +108,7 @@ public class Category implements Serializable {
 
     @Override
     public String toString() {
-        return "com.thien.ourproject.pojo.Category[ id=" + id + " ]";
+        return "com.thien.ourproject.pojo.Reader[ id=" + id + " ]";
     }
     
 }

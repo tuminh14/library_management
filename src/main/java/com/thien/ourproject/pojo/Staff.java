@@ -6,35 +6,32 @@
 package com.thien.ourproject.pojo;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author nguye
  */
 @Entity
-@Table(name = "category")
+@Table(name = "staff")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c"),
-    @NamedQuery(name = "Category.findById", query = "SELECT c FROM Category c WHERE c.id = :id"),
-    @NamedQuery(name = "Category.findByName", query = "SELECT c FROM Category c WHERE c.name = :name")})
-public class Category implements Serializable {
+    @NamedQuery(name = "Staff.findAll", query = "SELECT s FROM Staff s"),
+    @NamedQuery(name = "Staff.findById", query = "SELECT s FROM Staff s WHERE s.id = :id"),
+    @NamedQuery(name = "Staff.findBySalary", query = "SELECT s FROM Staff s WHERE s.salary = :salary")})
+public class Staff implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,16 +39,22 @@ public class Category implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 50)
-    @Column(name = "name")
-    private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryId", fetch = FetchType.EAGER)
-    private Collection<Book> bookCollection;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "salary")
+    private Double salary;
+    @JoinColumns({
+        @JoinColumn(name = "people_id", referencedColumnName = "id"),
+        @JoinColumn(name = "people_id", referencedColumnName = "id")})
+    @ManyToOne(optional = false)
+    private People people;
+    @JoinColumn(name = "type_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private StaffType typeId;
 
-    public Category() {
+    public Staff() {
     }
 
-    public Category(Integer id) {
+    public Staff(Integer id) {
         this.id = id;
     }
 
@@ -63,21 +66,28 @@ public class Category implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Double getSalary() {
+        return salary;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSalary(Double salary) {
+        this.salary = salary;
     }
 
-    @XmlTransient
-    public Collection<Book> getBookCollection() {
-        return bookCollection;
+    public People getPeople() {
+        return people;
     }
 
-    public void setBookCollection(Collection<Book> bookCollection) {
-        this.bookCollection = bookCollection;
+    public void setPeople(People people) {
+        this.people = people;
+    }
+
+    public StaffType getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(StaffType typeId) {
+        this.typeId = typeId;
     }
 
     @Override
@@ -90,10 +100,10 @@ public class Category implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Category)) {
+        if (!(object instanceof Staff)) {
             return false;
         }
-        Category other = (Category) object;
+        Staff other = (Staff) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -102,7 +112,7 @@ public class Category implements Serializable {
 
     @Override
     public String toString() {
-        return "com.thien.ourproject.pojo.Category[ id=" + id + " ]";
+        return "com.thien.ourproject.pojo.Staff[ id=" + id + " ]";
     }
     
 }

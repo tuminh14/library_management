@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -31,9 +33,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Book.findAll", query = "SELECT b FROM Book b"),
-    @NamedQuery(name = "Book.findByBookId", query = "SELECT b FROM Book b WHERE b.bookId = :bookId"),
+    @NamedQuery(name = "Book.findById", query = "SELECT b FROM Book b WHERE b.id = :id"),
     @NamedQuery(name = "Book.findByBookTitle", query = "SELECT b FROM Book b WHERE b.bookTitle = :bookTitle"),
-    @NamedQuery(name = "Book.findByCategoryId", query = "SELECT b FROM Book b WHERE b.categoryId = :categoryId"),
     @NamedQuery(name = "Book.findByAuthor", query = "SELECT b FROM Book b WHERE b.author = :author"),
     @NamedQuery(name = "Book.findByBookCopies", query = "SELECT b FROM Book b WHERE b.bookCopies = :bookCopies"),
     @NamedQuery(name = "Book.findByBookPub", query = "SELECT b FROM Book b WHERE b.bookPub = :bookPub"),
@@ -49,17 +50,13 @@ public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "book_id")
-    private Integer bookId;
+    @Column(name = "id")
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "book_title")
     private String bookTitle;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "category_id")
-    private int categoryId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
@@ -103,18 +100,20 @@ public class Book implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "status")
     private String status;
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Category categoryId;
 
     public Book() {
     }
 
-    public Book(Integer bookId) {
-        this.bookId = bookId;
+    public Book(Integer id) {
+        this.id = id;
     }
 
-    public Book(Integer bookId, String bookTitle, int categoryId, String author, int bookCopies, String bookPub, String publisherName, String isbn, int copyrightYear, String dateReceive, Date dateAdded, String status) {
-        this.bookId = bookId;
+    public Book(Integer id, String bookTitle, String author, int bookCopies, String bookPub, String publisherName, String isbn, int copyrightYear, String dateReceive, Date dateAdded, String status) {
+        this.id = id;
         this.bookTitle = bookTitle;
-        this.categoryId = categoryId;
         this.author = author;
         this.bookCopies = bookCopies;
         this.bookPub = bookPub;
@@ -126,12 +125,12 @@ public class Book implements Serializable {
         this.status = status;
     }
 
-    public Integer getBookId() {
-        return bookId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setBookId(Integer bookId) {
-        this.bookId = bookId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getBookTitle() {
@@ -140,14 +139,6 @@ public class Book implements Serializable {
 
     public void setBookTitle(String bookTitle) {
         this.bookTitle = bookTitle;
-    }
-
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
     }
 
     public String getAuthor() {
@@ -222,10 +213,18 @@ public class Book implements Serializable {
         this.status = status;
     }
 
+    public Category getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Category categoryId) {
+        this.categoryId = categoryId;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (bookId != null ? bookId.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -236,7 +235,7 @@ public class Book implements Serializable {
             return false;
         }
         Book other = (Book) object;
-        if ((this.bookId == null && other.bookId != null) || (this.bookId != null && !this.bookId.equals(other.bookId))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -244,7 +243,7 @@ public class Book implements Serializable {
 
     @Override
     public String toString() {
-        return "com.thien.ourproject.pojo.Book[ bookId=" + bookId + " ]";
+        return "com.thien.ourproject.pojo.Book[ id=" + id + " ]";
     }
     
 }

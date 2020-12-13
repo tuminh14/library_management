@@ -11,7 +11,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,13 +27,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author nguye
  */
 @Entity
-@Table(name = "category")
+@Table(name = "reader_type")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c"),
-    @NamedQuery(name = "Category.findById", query = "SELECT c FROM Category c WHERE c.id = :id"),
-    @NamedQuery(name = "Category.findByName", query = "SELECT c FROM Category c WHERE c.name = :name")})
-public class Category implements Serializable {
+    @NamedQuery(name = "ReaderType.findAll", query = "SELECT r FROM ReaderType r"),
+    @NamedQuery(name = "ReaderType.findById", query = "SELECT r FROM ReaderType r WHERE r.id = :id"),
+    @NamedQuery(name = "ReaderType.findByTypeName", query = "SELECT r FROM ReaderType r WHERE r.typeName = :typeName")})
+public class ReaderType implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,15 +42,15 @@ public class Category implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
-    @Column(name = "name")
-    private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryId", fetch = FetchType.EAGER)
-    private Collection<Book> bookCollection;
+    @Column(name = "type_name")
+    private String typeName;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "typeId")
+    private Collection<Reader> readerCollection;
 
-    public Category() {
+    public ReaderType() {
     }
 
-    public Category(Integer id) {
+    public ReaderType(Integer id) {
         this.id = id;
     }
 
@@ -63,21 +62,21 @@ public class Category implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTypeName() {
+        return typeName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
     @XmlTransient
-    public Collection<Book> getBookCollection() {
-        return bookCollection;
+    public Collection<Reader> getReaderCollection() {
+        return readerCollection;
     }
 
-    public void setBookCollection(Collection<Book> bookCollection) {
-        this.bookCollection = bookCollection;
+    public void setReaderCollection(Collection<Reader> readerCollection) {
+        this.readerCollection = readerCollection;
     }
 
     @Override
@@ -90,10 +89,10 @@ public class Category implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Category)) {
+        if (!(object instanceof ReaderType)) {
             return false;
         }
-        Category other = (Category) object;
+        ReaderType other = (ReaderType) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -102,7 +101,7 @@ public class Category implements Serializable {
 
     @Override
     public String toString() {
-        return "com.thien.ourproject.pojo.Category[ id=" + id + " ]";
+        return "com.thien.ourproject.pojo.ReaderType[ id=" + id + " ]";
     }
     
 }
