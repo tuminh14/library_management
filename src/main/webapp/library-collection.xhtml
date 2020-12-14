@@ -23,12 +23,12 @@
                                 <h2>Category</h2>
                                 <div class="panel-group category-products" id="accordian">
                                     <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <h:link outcome="library-collection?face-redirect=true" styleClass="nav-link" value="All">
-                                                    <f:param name="cateId" value=""></f:param>
-                                                </h:link>
-                                            </h4>
-                                        </div>
+                                        <h4 class="panel-title">
+                                            <h:link outcome="library-collection?face-redirect=true" styleClass="nav-link" value="All">
+                                                <f:param name="all" value=""></f:param>
+                                            </h:link>
+                                        </h4>
+                                    </div>
                                     <c:forEach var="cat" items="#{categoryBean.categories}">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
@@ -46,9 +46,30 @@
                             <div class="features_items"><!--features_items-->
                                 <h2 class="title text-center">Features Items</h2>
                                 <div class="col-sm-12">
+                                    <div>
+                                        <div class="col-sm-6">
+                                            <h:link styleClass="btn btn-warning" value="#{bMsg['books.add']}"
+                                                    outcome="library-collection?faces-redirect=true"/>
+                                        </div>
+                                        <div class="col-sm-4" >
+                                            <h:form>
+                                                <div class="row">
+                                                    <div class="col-md-10 form-group">
+                                                        <h:inputText styleClass="form-control" value="#{bookBean.keyword}"></h:inputText>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <h:commandButton class="btn btn-default" value="Search"></h:commandButton>
+                                                    </div>
+
+                                                </div>
+                                            </h:form>
+                                        </div>
+
+
+                                    </div>
                                     <div class="container">
-                                        <h:link styleClass="btn btn-warning" value="#{bMsg['books.add']}"
-                                                outcome="library-collection?faces-redirect=true"/>
+
+
                                         <table class="table">
                                             <tr>
                                                 <th>#{bMsg["books.id"]}</th>

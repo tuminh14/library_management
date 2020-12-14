@@ -6,6 +6,7 @@
 package com.thien.ourproject.services;
 
 import com.thien.ourproject.pojo.Book;
+import java.io.Console;
 import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -28,10 +29,11 @@ public class BookServices {
             
             if (kw != null && !kw.isEmpty()){
                 String p = String.format("%%%s%%", kw);
-                Predicate p1 = builder.like(root.get("name").as(String.class), p);
-                Predicate p2 = builder.like(root.get("description").as(String.class), p);
+                Predicate p1 = builder.like(root.get("bookTitle").as(String.class), p);
+                Predicate p2 = builder.like(root.get("author").as(String.class), p);
                 
                 query = query.where(builder.or(p1, p2));
+System.out.println("test");
             }
             
             return session.createQuery(query).getResultList();
