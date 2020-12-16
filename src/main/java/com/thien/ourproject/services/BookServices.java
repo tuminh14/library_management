@@ -17,48 +17,49 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 public class BookServices {
+
     private final static SessionFactory factory = HibernateUtils.getFACTORY();
-    
-    public List<Book> getBooks(String kw){
-        try (Session session = factory.openSession()) {
+
+    public List<Book> getBooks(String kw) {
+        try ( Session session = factory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery query = builder.createQuery();
             Root<Book> root = query.from(Book.class);
-            
+
             query = query.select(root);
-            
-            if (kw != null && !kw.isEmpty()){
+
+            if (kw != null && !kw.isEmpty()) {
                 String p = String.format("%%%s%%", kw);
                 Predicate p1 = builder.like(root.get("bookTitle").as(String.class), p);
                 Predicate p2 = builder.like(root.get("author").as(String.class), p);
-                
+
                 query = query.where(builder.or(p1, p2));
-System.out.println("test");
+                System.out.println("test");
             }
-            
+
             return session.createQuery(query).getResultList();
         }
     }
-    
+
     public Book getBookById(int id) {
-        try (Session session = factory.openSession()){
+        try ( Session session = factory.openSession()) {
             return session.get(Book.class, id);
         }
     }
-    
+
     public boolean addOrSaveBook(Book book) {
-        try (Session session = factory.openSession()) {
+        try ( Session session = factory.openSession()) {
             try {
                 session.getTransaction().begin();
                 session.saveOrUpdate(book);
                 session.getTransaction().commit();
             } catch (Exception ex) {
+                ex.printStackTrace();
                 session.getTransaction().rollback();
                 return false;
             }
-            }
-            
-        
+        }
+
         return true;
     }
 }

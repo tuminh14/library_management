@@ -8,10 +8,8 @@ package com.thien.ourproject.pojo;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,7 +43,7 @@ public class Category implements Serializable {
     @Size(max = 50)
     @Column(name = "name")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryId", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "categoryId")
     private Collection<Book> bookCollection;
 
     public Category() {
@@ -89,20 +87,16 @@ public class Category implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Category)) {
-            return false;
-        }
-        Category other = (Category) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        Category c = (Category) object;
+        
+        return this.id == c.id;
     }
+    
+    
 
     @Override
     public String toString() {
-        return "com.thien.ourproject.pojo.Category[ id=" + id + " ]";
+        return  String.valueOf(this.id);
     }
     
 }

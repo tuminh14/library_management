@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="templates/base.xhtml">
+            <ui:define name="header">
+
+            </ui:define>
+            <ui:define name="content">
+                <div class="container">
+                    <h:form>
+                        <h1 class="text-center">#{bMsg['books.admin']}</h1>
+                        <div class="form-group">
+                            <h:outputLabel value="#{bMsg['books.title']}"/>
+                            <h:inputText id="txtName" 
+                                         styleClass="form-control"
+                                         value="#{bookBean.book_title}"/>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel value="#{bMsg['books.author']}"/>
+                            <h:inputTextarea id="txtDescription" 
+                                             styleClass="form-control"
+                                             value="#{bookBean.author}"/>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel value="#{bMsg['books.cate']}"/>
+                            <h:selectOneMenu id="category"
+                                             styleClass="form-control"
+                                             converter="CategoryConverter"
+                                             value="#{bookBean.category}">
+                                <f:selectItems var="cat" 
+                                               value="#{categoryBean.categories}"
+                                               itemLabel="#{cat.name}"
+                                               itemValue="#{cat}">
+
+                                </f:selectItems>
+                            </h:selectOneMenu>
+                        </div>
+                        <div class="form-group">
+                            <h:commandButton value="Add Product"
+                                             action="#{bookBean.addBook()}"
+                                             styleClass="btn btn-warning"></h:commandButton>
+                        </div>
+                    </h:form>
+                </div>
+            </ui:define>
+            <ui:define name="contact">
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

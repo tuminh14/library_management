@@ -20,7 +20,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -52,56 +51,36 @@ public class Book implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 100)
     @Column(name = "book_title")
     private String bookTitle;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     @Column(name = "author")
     private String author;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "book_copies")
-    private int bookCopies;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    private Integer bookCopies;
+    @Size(max = 100)
     @Column(name = "book_pub")
     private String bookPub;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 100)
     @Column(name = "publisher_name")
     private String publisherName;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     @Column(name = "isbn")
     private String isbn;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "copyright_year")
-    private int copyrightYear;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
+    private Integer copyrightYear;
+    @Size(max = 20)
     @Column(name = "date_receive")
     private String dateReceive;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "date_added")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateAdded;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 30)
+    @Size(max = 30)
     @Column(name = "status")
     private String status;
     @JoinColumn(name = "category_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Category categoryId;
 
     public Book() {
@@ -109,20 +88,6 @@ public class Book implements Serializable {
 
     public Book(Integer id) {
         this.id = id;
-    }
-
-    public Book(Integer id, String bookTitle, String author, int bookCopies, String bookPub, String publisherName, String isbn, int copyrightYear, String dateReceive, Date dateAdded, String status) {
-        this.id = id;
-        this.bookTitle = bookTitle;
-        this.author = author;
-        this.bookCopies = bookCopies;
-        this.bookPub = bookPub;
-        this.publisherName = publisherName;
-        this.isbn = isbn;
-        this.copyrightYear = copyrightYear;
-        this.dateReceive = dateReceive;
-        this.dateAdded = dateAdded;
-        this.status = status;
     }
 
     public Integer getId() {
@@ -149,11 +114,11 @@ public class Book implements Serializable {
         this.author = author;
     }
 
-    public int getBookCopies() {
+    public Integer getBookCopies() {
         return bookCopies;
     }
 
-    public void setBookCopies(int bookCopies) {
+    public void setBookCopies(Integer bookCopies) {
         this.bookCopies = bookCopies;
     }
 
@@ -181,11 +146,11 @@ public class Book implements Serializable {
         this.isbn = isbn;
     }
 
-    public int getCopyrightYear() {
+    public Integer getCopyrightYear() {
         return copyrightYear;
     }
 
-    public void setCopyrightYear(int copyrightYear) {
+    public void setCopyrightYear(Integer copyrightYear) {
         this.copyrightYear = copyrightYear;
     }
 

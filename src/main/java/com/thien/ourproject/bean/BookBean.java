@@ -30,17 +30,11 @@ public class BookBean {
     private String author;
     private int book_copies;
 
+    private Category category;
+
     private final static BookServices bookServices = new BookServices();
 
     private String keyword;
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
-    }
 
     public List<Book> getBooks() {
 
@@ -57,18 +51,33 @@ public class BookBean {
         return new BookServices().getBooks(this.keyword);
     }
 
-//    public String addProduct() {
-//        Product product = new Product();
-//        product.setName(this.name);
-//        product.setDescription(this.description);
-//        product.setPrice(this.price);
-//        product.setCategoryId(this.category);
-//        
-//        if (productServices.addOrSaveProduct(product) == true)
-//            return "products-list?faces-redirect=true";
-//        
-//        return "index";
-//    }
+    public String addBook() {
+        Book product = new Book();
+        product.setBookTitle(this.book_title);
+        product.setAuthor(this.author);
+         product.setBookPub(null);
+        product.setCategoryId(this.category);
+        
+        if (bookServices.addOrSaveBook(product) == true)
+            return "products-list?faces-redirect=true";
+        
+        return "index?faces-redirect=true";
+    }
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     public int getId() {
         return id;
@@ -101,7 +110,5 @@ public class BookBean {
     public void setBook_copies(int book_copies) {
         this.book_copies = book_copies;
     }
-
-   
 
 }
