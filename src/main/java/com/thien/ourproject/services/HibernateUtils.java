@@ -38,17 +38,17 @@ public class HibernateUtils {
 
         
         conf.addAnnotatedClass(Book.class);
-//        conf.addAnnotatedClass(BookBorrowed.class);
-//        conf.addAnnotatedClass(BorrowTracking.class);
+        conf.addAnnotatedClass(BookBorrowed.class);
+        conf.addAnnotatedClass(BorrowTracking.class);
         conf.addAnnotatedClass(Category.class);
-//        conf.addAnnotatedClass(LostBookTracking.class);
-//        conf.addAnnotatedClass(People.class);
-//        conf.addAnnotatedClass(Reader.class);
-//        conf.addAnnotatedClass(ReaderCard.class);
-//        conf.addAnnotatedClass(ReaderType.class);
-//        conf.addAnnotatedClass(Staff.class);
-//        conf.addAnnotatedClass(StaffType.class);
-//        conf.addAnnotatedClass(Users.class);
+        conf.addAnnotatedClass(LostBookTracking.class);
+        conf.addAnnotatedClass(People.class);
+        conf.addAnnotatedClass(Reader.class);
+        conf.addAnnotatedClass(ReaderCard.class);
+        conf.addAnnotatedClass(ReaderType.class);
+        conf.addAnnotatedClass(Staff.class);
+        conf.addAnnotatedClass(StaffType.class);
+        conf.addAnnotatedClass(Users.class);
 
         Properties props = new Properties();
         props.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5InnoDBDialect");
