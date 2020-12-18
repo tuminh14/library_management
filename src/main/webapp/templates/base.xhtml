@@ -10,24 +10,19 @@
         <f:loadBundle var="bMsg" basename="books"/>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 
-        <h:outputStylesheet name="bootstrap.min.css" library="css"/>
-        <h:outputStylesheet name="font-awesome.min.css" library="css"/>
+        <!--<h:outputStylesheet name="bootstrap.min.css" library="css"/>-->
+        <!--<h:outputStylesheet name="font-awesome.min.css" library="css"/>-->
         <h:outputStylesheet name="prettyPhoto.css" library="css"/>
         <h:outputStylesheet name="price-range.css" library="css"/>
         <h:outputStylesheet name="animate.css" library="css"/>
         <h:outputStylesheet name="main.css" library="css"/>
         <h:outputStylesheet name="responsive.css" library="css"/>
 
-        <h:outputScript name="jquery.js" library="js"/>
-        <h:outputScript name="bootstrap.min.js" library="js"/>
-        <h:outputScript name="jquery.scrollUp.min.js" library="js"/>
-        <h:outputScript name="price-range.js" library="js"/>
-        <h:outputScript name="jquery.prettyPhoto.js" library="js"/>
-        <h:outputScript name="main.js" library="js"/>
+
     </h:head>
 
     <h:body>
@@ -49,7 +44,15 @@
         </ui:insert>
         <ui:insert name="footer">
             <ui:include src="footer.xhtml" />
-        </ui:insert>
+        </ui:insert>    
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <h:outputScript name="jquery.js" library="js"/>
+        <h:outputScript name="bootstrap.min.js" library="js"/>
+        <h:outputScript name="jquery.scrollUp.min.js" library="js"/>
+        <h:outputScript name="price-range.js" library="js"/>
+        <h:outputScript name="jquery.prettyPhoto.js" library="js"/>
+        <h:outputScript name="main.js" library="js"/>
     </h:body>
 </html>
 

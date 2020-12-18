@@ -53,9 +53,8 @@ public class ReaderCard implements Serializable {
     private Date endDate;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "readerCardId")
     private Collection<Reader> readerCollection;
-    @JoinColumn(name = "book_borrowed_id", referencedColumnName = "id")
-    @ManyToOne
-    private BookBorrowed bookBorrowedId;
+    @OneToMany(mappedBy = "readerCardId")
+    private Collection<BookBorrowed> bookBorrowedCollection;
 
     public ReaderCard() {
     }
@@ -94,12 +93,12 @@ public class ReaderCard implements Serializable {
         this.readerCollection = readerCollection;
     }
 
-    public BookBorrowed getBookBorrowedId() {
-        return bookBorrowedId;
+    public Collection<BookBorrowed> getBookBorrowedCollection() {
+        return bookBorrowedCollection;
     }
 
-    public void setBookBorrowedId(BookBorrowed bookBorrowedId) {
-        this.bookBorrowedId = bookBorrowedId;
+    public void setBookBorrowedCollection(Collection<BookBorrowed> bookBorrowedCollection) {
+        this.bookBorrowedCollection = bookBorrowedCollection;
     }
 
     @Override

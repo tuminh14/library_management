@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -55,13 +57,15 @@ public class BookBorrowed implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date borrowDate;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "return_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date returnDate;
-    @OneToMany(mappedBy = "bookBorrowedId")
-    private Collection<ReaderCard> readerCardCollection;
+    
 
+    @JoinColumn(name = "reader_card_id", referencedColumnName = "id")
+    @ManyToOne
+    private ReaderCard readerCardId;
+    
     public BookBorrowed() {
     }
 
@@ -108,14 +112,15 @@ public class BookBorrowed implements Serializable {
         this.returnDate = returnDate;
     }
 
-    @XmlTransient
-    public Collection<ReaderCard> getReaderCardCollection() {
-        return readerCardCollection;
+    public ReaderCard getReaderCardId() {
+        return readerCardId;
     }
 
-    public void setReaderCardCollection(Collection<ReaderCard> readerCardCollection) {
-        this.readerCardCollection = readerCardCollection;
+    public void setReaderCardId(ReaderCard readerCardId) {
+        this.readerCardId = readerCardId;
     }
+
+    
 
     @Override
     public int hashCode() {

@@ -24,6 +24,18 @@ import javax.inject.Named;
 @RequestScoped
 @Named(value = "bookBean")
 public class BookBean {
+    
+    private int tempBookId;
+
+    public int getTempBookId() {
+        return tempBookId;
+    }
+
+    public void setTempBookId(int tempBookId) {
+        this.tempBookId = tempBookId;
+    }
+    
+    
 
     private int id;
     private String book_title;
@@ -35,34 +47,62 @@ public class BookBean {
     private final static BookServices bookServices = new BookServices();
 
     private String keyword;
+    private List<Book> tempBook;
+    public BookBean() {
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+
+            String bookId = FacesContext.getCurrentInstance().getExternalContext()
+                    .getRequestParameterMap().get("book_id");
+            if (bookId != null && !bookId.isEmpty()) {
+                Book book = bookServices.getBookById(Integer.parseInt(bookId));
+                this.tempBookId = book.getId();
+                this.book_title = book.getBookTitle();
+                this.author = book.getAuthor();
+                this.book_copies = book.getBookCopies();
+                this.category = book.getCategoryId();
+            }
+        }
+    }
 
     public List<Book> getBooks() {
+        if (this.tempBook == null) {
+            String cateId = FacesContext.getCurrentInstance()
+                    .getExternalContext()
+                    .getRequestParameterMap()
+                    .get("cateId");
 
-        String cateId = FacesContext.getCurrentInstance()
-                .getExternalContext()
-                .getRequestParameterMap()
-                .get("cateId");
+            if (cateId != null && !cateId.isEmpty()) {
+                Category c = new CategoryServices().getCateById(cateId);
 
-        if (cateId != null && !cateId.isEmpty()) {
-            Category c = new CategoryServices().getCateById(cateId);
-
-            return (List<Book>) c.getBookCollection();
+                this.tempBook = (List<Book>) c.getBookCollection();
+            } else {
+                this.tempBook = new BookServices().getBooks(this.keyword);
+            }
         }
-        return new BookServices().getBooks(this.keyword);
+        return tempBook;
     }
 
     public String addBook() {
-        Book product = new Book();
-        product.setBookTitle(this.book_title);
-        product.setAuthor(this.author);
-         product.setBookPub(null);
-        product.setCategoryId(this.category);
-        
-        if (bookServices.addOrSaveBook(product) == true)
-            return "products-list?faces-redirect=true";
-        
+       
+        Book book;
+        if (this.tempBookId > 0) {
+            book = bookServices.getBookById(this.tempBookId);
+        } else {
+            book = new Book();
+        }
+
+        book.setBookTitle(this.book_title);
+        book.setAuthor(this.author);
+        book.setBookCopies(this.book_copies);
+        book.setCategoryId(this.category);
+
+        if (bookServices.addOrSaveBook(book) == true) {
+            return "library-collection.xhtml?faces-redirect=true";
+        }
+
         return "index?faces-redirect=true";
     }
+
     public String getKeyword() {
         return keyword;
     }
@@ -109,6 +149,13 @@ public class BookBean {
 
     public void setBook_copies(int book_copies) {
         this.book_copies = book_copies;
+    }
+
+    public String deleteBook(Book book) throws Exception {
+        if (bookServices.deleteBook(book)) {
+            return "Successful";
+        }
+        throw new Exception("Something wrong");
     }
 
 }
