@@ -35,7 +35,7 @@ public class BookBean {
         this.tempBookId = tempBookId;
     }
     
-    
+
 
     private int id;
     private String book_title;
@@ -47,7 +47,10 @@ public class BookBean {
     private final static BookServices bookServices = new BookServices();
 
     private String keyword;
+
     private List<Book> tempBook;
+    private List<Book> tempBookSearch;
+
     public BookBean() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
 
@@ -64,23 +67,6 @@ public class BookBean {
         }
     }
 
-    public List<Book> getBooks() {
-        if (this.tempBook == null) {
-            String cateId = FacesContext.getCurrentInstance()
-                    .getExternalContext()
-                    .getRequestParameterMap()
-                    .get("cateId");
-
-            if (cateId != null && !cateId.isEmpty()) {
-                Category c = new CategoryServices().getCateById(cateId);
-
-                this.tempBook = (List<Book>) c.getBookCollection();
-            } else {
-                this.tempBook = new BookServices().getBooks(this.keyword);
-            }
-        }
-        return tempBook;
-    }
 
     public String addBook() {
        
@@ -102,6 +88,38 @@ public class BookBean {
 
         return "index?faces-redirect=true";
     }
+    
+
+
+    public List<Book> getBooks() {
+        String cateId = FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getRequestParameterMap()
+                .get("cateId");
+
+        if (cateId != null && !cateId.isEmpty()) {
+            Category c = new CategoryServices().getCateById(cateId);
+
+            if (tempBook == null) {
+                tempBook = (List<Book>) c.getBookCollection();
+            }
+            return tempBook;
+        }
+        if (keyword == null) {
+            if (tempBookSearch == null) {
+                tempBookSearch = new BookServices().getBooks(null);
+            }
+            return tempBookSearch;
+        } else {
+            if (tempBook == null) {
+                tempBook = new BookServices().getBooks(this.keyword);
+            }
+            return tempBook;
+        }
+
+    }
+
+  
 
     public String getKeyword() {
         return keyword;
@@ -116,6 +134,7 @@ public class BookBean {
     }
 
     public void setCategory(Category category) {
+
         this.category = category;
     }
 
