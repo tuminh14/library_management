@@ -36,8 +36,12 @@ public class BookBean {
 
     private String keyword;
 
-    public List<Book> getBooks() {
 
+    private List<Book> tempBook;
+    private List<Book> tempBookSearch;
+
+
+    public List<Book> getBooks() {
         String cateId = FacesContext.getCurrentInstance()
                 .getExternalContext()
                 .getRequestParameterMap()
@@ -46,9 +50,23 @@ public class BookBean {
         if (cateId != null && !cateId.isEmpty()) {
             Category c = new CategoryServices().getCateById(cateId);
 
-            return (List<Book>) c.getBookCollection();
+            if (tempBook == null) {
+                tempBook = (List<Book>) c.getBookCollection();
+            }
+            return tempBook;
         }
-        return new BookServices().getBooks(this.keyword);
+        if (keyword == null) {
+            if (tempBookSearch == null) {
+                tempBookSearch = new BookServices().getBooks(null);
+            }
+            return tempBookSearch;
+        } else {
+            if (tempBook == null) {
+                tempBook = new BookServices().getBooks(this.keyword);
+            }
+            return tempBook;
+        }
+
     }
 
     public String addBook() {
@@ -76,6 +94,7 @@ public class BookBean {
     }
 
     public void setCategory(Category category) {
+
         this.category = category;
     }
 
