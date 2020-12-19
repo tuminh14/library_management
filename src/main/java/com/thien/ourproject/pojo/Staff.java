@@ -42,9 +42,8 @@ public class Staff implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "salary")
     private Double salary;
-    @JoinColumns({
-        @JoinColumn(name = "people_id", referencedColumnName = "id"),
-        @JoinColumn(name = "people_id", referencedColumnName = "id")})
+
+    @JoinColumn(name = "people_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private People people;
     @JoinColumn(name = "type_id", referencedColumnName = "id")

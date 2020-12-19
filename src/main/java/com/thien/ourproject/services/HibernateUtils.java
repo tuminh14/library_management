@@ -38,26 +38,26 @@ public class HibernateUtils {
 
         
         conf.addAnnotatedClass(Book.class);
-//        conf.addAnnotatedClass(BookBorrowed.class);
-//        conf.addAnnotatedClass(BorrowTracking.class);
+        conf.addAnnotatedClass(BookBorrowed.class);
+        conf.addAnnotatedClass(BorrowTracking.class);
         conf.addAnnotatedClass(Category.class);
-//        conf.addAnnotatedClass(LostBookTracking.class);
-//        conf.addAnnotatedClass(People.class);
-//        conf.addAnnotatedClass(Reader.class);
-//        conf.addAnnotatedClass(ReaderCard.class);
-//        conf.addAnnotatedClass(ReaderType.class);
-//        conf.addAnnotatedClass(Staff.class);
-//        conf.addAnnotatedClass(StaffType.class);
-//        conf.addAnnotatedClass(Users.class);
+        conf.addAnnotatedClass(LostBookTracking.class);
+        conf.addAnnotatedClass(People.class);
+        conf.addAnnotatedClass(Reader.class);
+        conf.addAnnotatedClass(ReaderCard.class);
+        conf.addAnnotatedClass(ReaderType.class);
+        conf.addAnnotatedClass(Staff.class);
+        conf.addAnnotatedClass(StaffType.class);
+        conf.addAnnotatedClass(Users.class);
 
         Properties props = new Properties();
-        props.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
+        props.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5InnoDBDialect");
         props.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-        props.put(Environment.URL, "jdbc:mysql://localhost/library_management");
-        props.put(Environment.USER, "root");
-        props.put(Environment.PASS, "root");
+        props.put(Environment.URL, "jdbc:mysql://localhost/library_management?createDatabaseIfNotExist=true&useSSL=true");
+        props.put(Environment.USER, "tuminh14");
+        props.put(Environment.PASS, "14061999");
         props.put(Environment.SHOW_SQL, true);
-
+        props.put(Environment.HBM2DDL_AUTO, "update");
         conf.setProperties(props);
 
         ServiceRegistry registry = new StandardServiceRegistryBuilder()
