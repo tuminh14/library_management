@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      >
+    <h:head>
+        <title>Facelet Title</title>
+        <link rel="stylesheet" href="css/material-icons.css"/>
+    </h:head>
+    <h:body>
+        <ui:composition template="templates/base.xhtml">
+            <ui:define name="header">
+
+            </ui:define>
+            <ui:define name="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="left-sidebar">
+                                <h2>Loại nhân viên</h2>
+                                <div class="panel-group category-products" id="accordian">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <h:link outcome="staff-collection?face-redirect=true" styleClass="nav-link" value="All">
+                                                <f:param name="all" value=""></f:param>
+                                            </h:link>
+                                        </h4>
+                                    </div>
+                                    <c:forEach var="type" items="#{staffTypeBean.types}">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <h:link outcome="staff-collection?face-redirect=true" styleClass="nav-link" value="#{type.typeName}">
+                                                    <f:param  name="staffTypeId" value="#{type.id}"></f:param>
+                                                </h:link>
+                                            </h4>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                            </div><!--/category-products-->
+                        </div>
+
+                        <div class="col-sm-9 padding-right">
+                            <div class="features_items"><!--features_items-->
+                                <h2 class="title text-center">Danh sách nhân viên</h2>
+                                <div class="col-sm-12">
+                                    <div>
+                                        <div class="col-sm-6">
+                                            <h:link styleClass="btn btn-warning" value="#{staffMsg['staffs.add']}"
+                                                    outcome="staff.xhtml?faces-redirect=true"/>
+                                        </div>
+                                        <div class="col-sm-4" >
+                                            <h:form>
+                                                <div class="row">
+                                                    <div class="col-md-10 form-group">
+                                                        <h:inputText styleClass="form-control" value="#{staffBean.keyword}"></h:inputText>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <h:commandButton class="btn btn-default" value="Search"></h:commandButton>
+                                                    </div>
+
+                                                </div>
+                                            </h:form>
+                                        </div>
+                                    </div>
+                                    <div class="container" style="width: 90% !important;">
+
+
+                                        <table class="table">
+                                            <tr>
+                                                <th>#{staffMsg["staffs.id"]}</th>
+                                                <th>#{ppMsg["people.lastname"]}</th>
+                                                <th>#{ppMsg["people.firstname"]}</th>
+                                                <th>#{ppMsg["people.gender"]}</th>
+                                                <th>#{ppMsg["people.contact"]}</th>
+                                                <th>#{ppMsg["people.address"]}</th>
+                                                <th>#{staffMsg["staffs.salary"]}</th>
+                                                <th style="width: 15%"></th>
+                                            </tr>
+                                            <c:forEach var="staff" items="#{staffBean.staffs}">
+                                                <tr>
+                                                    <td>#{staff.id}</td>
+                                                    <td>#{staff.people.lastname}</td>
+                                                    <td>#{staff.people.firstname}</td>
+                                                    <td>#{staff.people.gender}</td>
+                                                    <td>#{staff.people.contact}</td>
+                                                    <td>#{staff.people.address}</td>
+                                                    <td>#{staff.salary}</td>
+                                                    <td>
+                                                        <h:link outcome="staff.xhtml?faces-redirect=true" >
+                                                            <f:param name="staff_id" value="#{staff.id}"></f:param>
+                                                            <i class="fa fa-pencil"></i>
+                                                        </h:link>
+
+                                       
+                                                        <h:commandLink action="staff-collection.xhtml?faces-redirect=true">
+                                                            <i class="fa fa-trash"></i>
+                                                            <f:ajax listener="#{bookBean.delete(staff)}"
+                                                                    onevent="deleteSuccess"
+                                                                    onerror="deleteError"
+
+                                                                    />
+                                                        </h:commandLink>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div><!--features_items-->
+
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    function deleteSuccess() {
+                        alert("Xoa thanh cong");
+
+                    }
+
+                    function deleteError() {
+                        alert("Xoa that bai")
+                    }
+                </script>
+            </ui:define>
+            <ui:define name="contact">
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

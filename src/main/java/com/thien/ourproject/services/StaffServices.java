@@ -27,14 +27,13 @@ public class StaffServices {
 
             query = query.select(root);
 
-//            if (kw != null && !kw.isEmpty()) {
-//                String p = String.format("%%%s%%", kw);
-//                Predicate p1 = builder.like(root.get("bookTitle").as(String.class), p);
-//                Predicate p2 = builder.like(root.get("author").as(String.class), p);
-//
-//                query = query.where(builder.or(p1, p2));
-//                System.out.println("test");
-//            }
+            if (kw != null && !kw.isEmpty()) {
+                String p = String.format("%%%s%%", kw);
+                Predicate p1 = builder.like(root.get("bookTitle").as(String.class), p);
+                Predicate p2 = builder.like(root.get("author").as(String.class), p);
+
+                query = query.where(builder.or(p1, p2));
+            }
 
             return session.createQuery(query).getResultList();
         }

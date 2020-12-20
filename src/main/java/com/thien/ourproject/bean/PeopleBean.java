@@ -7,12 +7,15 @@ package com.thien.ourproject.bean;
 
 import com.thien.ourproject.pojo.Book;
 import com.thien.ourproject.pojo.People;
+import com.thien.ourproject.pojo.Staff;
 import com.thien.ourproject.pojo.StaffType;
 import com.thien.ourproject.services.PeopleServices;
 import com.thien.ourproject.services.StaffServices;
 
+import javax.el.ELContext;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 @ManagedBean
@@ -26,13 +29,24 @@ public class PeopleBean {
     private String gender;
     private String address;
     private String contact;
+    private People people;
 
     private final static PeopleServices peopleServices = new PeopleServices();
 
 
     public PeopleBean() {
+        if (!FacesContext.getCurrentInstance().isPostback()) {
 
+            String staffId = FacesContext.getCurrentInstance().getExternalContext()
+                    .getRequestParameterMap().get("staff_id");
+            if (staffId != null && !staffId.isEmpty()) {
+                Staff staff = new StaffServices().getById(Integer.parseInt(staffId));
+                this.setPeople(staff.getPeople());
+            }
+        }
     }
+
+
 
     public People add() {
         People people = new People();
@@ -94,5 +108,19 @@ public class PeopleBean {
 
     public void setContact(String contact) {
         this.contact = contact;
+    }
+
+    public People getPeople() {
+        return people;
+    }
+
+    public void setPeople(People people) {
+        this.people = people;
+        this.firstname = people.getFirstname();
+        this.lastname = people.getLastname();
+        this.contact = people.getContact();
+        this.address = people.getAddress();
+        this.gender = people.getGender();
+        this.id = people.getId();
     }
 }
