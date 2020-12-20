@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<h:head>
+    <title>Facelet Title</title>
+</h:head>
+<h:body>
+    <ui:composition template="templates/base.xhtml">
+        <ui:define name="header">
+
+        </ui:define>
+        <ui:define name="content">
+            <div class="container">
+                <h:form>
+                    <h1 class="text-center">#{bMsg['staff.admin']}</h1>
+                    <div class="form-group">
+                        <h:outputLabel value="#{bMsg['people.firstname']}"/>
+                        <h:inputText id="txtFirstname"
+                                     styleClass="form-control"
+                                     value="#{peopleBean.firstname}"/>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel value="#{bMsg['people.lastname']}"/>
+                        <h:inputText
+                                id="txtLastname"
+                                styleClass="form-control"
+                                value="#{peopleBean.lastname}"/>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel value="#{bMsg['people.gender']}"/>
+                        <h:inputText
+                                id="txtGender"
+                                styleClass="form-control"
+                                value="#{peopleBean.gender}"/>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel value="#{bMsg['people.address']}"/>
+                        <h:inputText
+                                id="txtAddress"
+                                styleClass="form-control"
+                                value="#{peopleBean.address}"/>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel value="#{bMsg['people.contact']}"/>
+                        <h:inputText
+                                id="txtContact"
+                                styleClass="form-control"
+                                value="#{peopleBean.contact}"/>
+                    </div>
+                   <div class="form-group">
+                        <h:outputLabel value="#{bMsg['staff.salary']}"/>
+                        <h:inputText
+                                id="txtsalary"
+                                styleClass="form-control"
+                                value="#{staffBean.salary}"/>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel value="#{bMsg['staff.type']}"/>
+                        <h:selectOneMenu id="staffType"
+                                         styleClass="form-control"
+                                         converter="StaffTypeConverter"
+                                         value="#{staffBean.staffType}">
+                            <f:selectItems var="type"
+                                           value="#{staffTypeBean.types}"
+                                           itemLabel="#{type.typeName}"
+                                           itemValue="#{type}">
+
+                            </f:selectItems>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="form-group">
+                        <h:inputHidden value="#{staffBean.inputId}"/>
+                        <h:commandButton value="Add"
+                                         action="#{staffBean.addStaff()}"
+                                         styleClass="btn btn-warning"></h:commandButton>
+                    </div>
+                </h:form>
+            </div>
+        </ui:define>
+        <ui:define name="contact">
+
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
