@@ -101,7 +101,7 @@ public class StaffType implements Serializable {
 
     @Override
     public String toString() {
-        return "com.thien.ourproject.pojo.StaffType[ id=" + id + " ]";
+        return String.valueOf(this.id);
     }
     
 }
