@@ -151,6 +151,13 @@ public class StaffBean {
         }
     }
 
+    public String delete(Staff staff) throws Exception {
+        if (staffServices.delete(staff)) {
+            return "Successful";
+        }
+        throw new Exception("Something wrong");
+    }
+
     public String getKeyword() {
         return keyword;
     }
