@@ -5,14 +5,19 @@
  */
 package com.thien.ourproject.services;
 
+import com.thien.ourproject.model.AuthorBook;
 import com.thien.ourproject.pojo.Book;
 import java.io.Console;
+import java.lang.reflect.Array;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
+
+import com.thien.ourproject.pojo.Category;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -40,7 +45,19 @@ public class BookServices {
             return session.createQuery(query).getResultList();
         }
     }
-
+    public ArrayList<AuthorBook> getAuthors(){
+        try ( Session session = factory.openSession()) {
+            ArrayList<AuthorBook> bookList = new ArrayList<>();
+            TypedQuery<Object[]> query = session.createQuery("select distinct b.author from Book as b", Object[].class);
+            List<Object[]> results = query.getResultList();
+            for(Object result : results){
+                List<Book> listOfBook = new ArrayList<Book>(session.createNamedQuery("Book.findByAuthor",Book.class).setParameter("author", result).getResultList());
+                bookList.add(new AuthorBook(result.toString(), listOfBook.size()));
+            }
+            Collections.sort(bookList);
+            return new ArrayList<AuthorBook>(bookList.subList(0,10));
+        }
+    }
     public Book getBookById(int id) {
         try ( Session session = factory.openSession()) {
             return session.get(Book.class, id);
@@ -78,4 +95,16 @@ public class BookServices {
 
         return true;
     }
+    public List<Book> getTopBook(int max){
+        try ( Session session = factory.openSession()) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery query = builder.createQuery();
+            Root<Book> root = query.from(Book.class);
+            query = query.select(root);
+            return session.createQuery(query)
+                    .setMaxResults(max)
+                    .getResultList();
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.thien.ourproject.services;
 
+import com.thien.ourproject.pojo.Book;
 import com.thien.ourproject.pojo.Category;
 import java.util.List;
 import javax.persistence.Query;
@@ -39,4 +40,17 @@ public class CategoryServices {
     public Category getCateById(String id) {
         return this.getCateById(Integer.parseInt(id));
     }
+
+    public List<Category> getTopCategories(int max) {
+        try (Session session = factory.openSession()) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery query = builder.createQuery();
+            Root<Category> root = query.from(Category.class);
+            query = query.select(root);
+            return session.createQuery(query)
+                    .setMaxResults(max)
+                    .getResultList();
+        }
+    }
+
 }
