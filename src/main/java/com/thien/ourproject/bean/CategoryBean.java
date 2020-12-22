@@ -30,6 +30,7 @@ public class CategoryBean {
     public List<Category> getCategories() {
         return new CategoryServices().getCates();
     }
+
     public String getTest(){
         return "testCate";
     }

@@ -5,11 +5,13 @@
  */
 package com.thien.ourproject.bean;
 
+import com.thien.ourproject.model.AuthorBook;
 import com.thien.ourproject.pojo.Book;
 import com.thien.ourproject.pojo.Category;
 import com.thien.ourproject.services.CategoryServices;
 import com.thien.ourproject.services.BookServices;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -118,8 +120,12 @@ public class BookBean {
         }
 
     }
-
-  
+    public List<Book> getTopBooks(){
+        return new BookServices().getTopBook(6);
+    }
+    public ArrayList<AuthorBook> getAuthors(){
+        return new BookServices().getAuthors();
+    }
 
     public String getKeyword() {
         return keyword;
@@ -176,5 +182,7 @@ public class BookBean {
         }
         throw new Exception("Something wrong");
     }
+
+
 
 }
