@@ -26,35 +26,47 @@ import javax.inject.Named;
 @RequestScoped
 @Named(value = "userBean")
 public class UserBean {
+
     private String username;
     private String password;
-    
+
     private static UserServices userServices = new UserServices();
-    
-    public String register(){
+
+    public String register() {
         Users user = new Users();
         user.setUsername(username);
         user.setPassword(password);
-        
-        if(userServices.addUser(user) == true) {
+
+        if (userServices.addUser(user) == true) {
             return "login?faces-redirect=true";
         }
-        
+
         return "register";
     }
-    
+
     public String login() {
         Users user = userServices.login(username, password);
-        
-        if(user!=null) {
+
+        if (user != null) {
             FacesContext.getCurrentInstance()
                     .getExternalContext()
                     .getSessionMap().put("user", user);
-            return "index?faces-redirect=true"; 
+            return "index?faces-redirect=true";
         }
-        
-            
+
         return "login";
+    }
+
+    public String checkLogin() {
+        if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user") != null) {
+            return "index?faces-redirect=true";
+        }
+        return null;
+    }
+
+    public String logout() {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("user");
+        return "login?faces-redirect=true";
     }
 
     public String getUsername() {
@@ -72,6 +84,5 @@ public class UserBean {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    
+
 }

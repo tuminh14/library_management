@@ -55,7 +55,7 @@ public class HibernateUtils {
         props.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
         props.put(Environment.URL, "jdbc:mysql://localhost/library_management?createDatabaseIfNotExist=true&useSSL=true");
         props.put(Environment.USER, "root");
-        props.put(Environment.PASS, "kobikpas");
+        props.put(Environment.PASS, "root");
         props.put(Environment.SHOW_SQL, true);
         props.put(Environment.HBM2DDL_AUTO, "update");
         conf.setProperties(props);
