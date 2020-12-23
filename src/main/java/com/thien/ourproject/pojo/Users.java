@@ -51,13 +51,11 @@ public class Users implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "password")
     private String password;
-    @Basic(optional = false)
-    @NotNull
+  
     @Size(min = 1, max = 100)
     @Column(name = "firstname")
     private String firstname;
-    @Basic(optional = false)
-    @NotNull
+
     @Size(min = 1, max = 100)
     @Column(name = "lastname")
     private String lastname;

@@ -1,7 +1,10 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:b="http://bootsfaces.net/ui">
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                >
     <header id="header"><!--header-->
         <div class="header-middle"><!--header-middle-->
             <div class="container">
@@ -11,16 +14,36 @@
                             <h:link outcome="index?face-redirect=true"> <h:graphicImage name="images/ou/logoou.png"></h:graphicImage>
                             </h:link>                       
                         </div>
-
-
-
                     </div>
                     <div class="col-md-8 clearfix">
                         <div class="shop-menu clearfix pull-right">
-                            <ul class="nav navbar-nav">
-                                <li><a href=""><i class="fa fa-user"></i> Account</a></li>
-                                <li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
-                            </ul>
+                            <h:form >
+                                <ul class="nav navbar-nav">
+                                    <li>
+                                        <c:if test="#{facesContext.externalContext.sessionMap.get('user') == null }">
+                                            <h:commandLink 
+                                                value="Đăng ký" action="register?faces-redirect=true">
+                                                <i class="fa fa-user"></i>
+                                            </h:commandLink>
+                                            <h:commandLink  value="Đăng nhập" action="login?faces-redirect=true">
+                                                <i class="fa fa-lock"/>
+                                            </h:commandLink>
+
+                                        </c:if>
+                                    </li>
+                                    <li>
+                                        <c:if test="#{facesContext.externalContext.sessionMap.get('user') != null }">
+
+                                            <h:commandLink action="#{userBean.logout()}" value="#{facesContext.externalContext.sessionMap.get('user').username}">
+                                                <i class="fa fa-user"></i>
+                                            </h:commandLink>
+                                            <h:commandLink action="#{userBean.logout()}" value="Đăng xuất">
+                                                <i class="fa fa-lock"></i>
+                                            </h:commandLink>
+                                        </c:if>
+                                    </li>
+                                </ul>
+                            </h:form>
                         </div>
                     </div>
                 </div>
