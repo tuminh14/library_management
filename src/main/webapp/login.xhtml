@@ -19,8 +19,10 @@
                 </f:metadata>
                 <div class="container">
                     <h:form>
+                        <h:outputText class="alert alert-danger" value="#{userBean.error}" rendered="#{userBean.error != null}"/>
+                        
                         <h1 class="text-center">Đăng nhập người dùng</h1>
-                        <h:messages />
+                        <h:messages/>
                         <div class="form-group">
                             <h:outputLabel value="Tên đăng nhập"/>
                             <h:inputText id="txtUsername" 
@@ -37,7 +39,9 @@
                         <div class="form-group">
                             <h:commandButton value="Signup"
                                              action="#{userBean.login()}"
-                                             styleClass="btn btn-warning"></h:commandButton>
+                                             styleClass="btn btn-warning"
+                                             >
+                            </h:commandButton>
                         </div>
                     </h:form>
                 </div>

@@ -58,6 +58,8 @@ public class UserServices {
             query = query.where(builder.and(p1, p2));
 
             return session.createQuery(query).getSingleResult();
+        } catch (Exception ex) {
+            return null;
         }
     }
 }

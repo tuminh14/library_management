@@ -5,6 +5,7 @@
  */
 package com.thien.ourproject.bean;
 
+import com.thien.ourproject.configs.Constants;
 import com.thien.ourproject.pojo.Book;
 import com.thien.ourproject.pojo.Category;
 import com.thien.ourproject.pojo.Users;
@@ -13,8 +14,10 @@ import com.thien.ourproject.services.BookServices;
 import com.thien.ourproject.services.UserServices;
 import java.math.BigDecimal;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
@@ -44,6 +47,18 @@ public class UserBean {
         return "register";
     }
 
+    private String error;
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+    
+    
+
     public String login() {
         Users user = userServices.login(username, password);
 
@@ -52,9 +67,11 @@ public class UserBean {
                     .getExternalContext()
                     .getSessionMap().put("user", user);
             return "index?faces-redirect=true";
+        } else {
+            this.setError(Constants.ERROR_MESSAGE.LOGIN_FAILD);
+            return null;
         }
 
-        return "login";
     }
 
     public String checkLogin() {
