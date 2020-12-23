@@ -40,7 +40,7 @@ public class Reader implements Serializable {
     @JoinColumn(name = "people_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private People peopleId;
-    @JoinColumn(name = "reader_card_id", referencedColumnName = "id")
+    @JoinColumn(name = "reader_card_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private ReaderCard readerCardId;
     @JoinColumn(name = "type_id", referencedColumnName = "id")

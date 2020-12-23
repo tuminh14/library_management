@@ -52,31 +52,10 @@
                                 styleClass="form-control"
                                 value="#{peopleBean.contact}"/>
                     </div>
-                   <div class="form-group">
-                        <h:outputLabel value="#{staffMsg['staffs.salary']}"/>
-                        <h:inputText
-                                id="txtsalary"
-                                styleClass="form-control"
-                                value="#{staffBean.salary}"/>
-                    </div>
                     <div class="form-group">
-                        <h:outputLabel value="#{staffMsg['staffs.type']}"/>
-                        <h:selectOneMenu id="staffType"
-                                         styleClass="form-control"
-                                         converter="StaffTypeConverter"
-                                         value="#{staffBean.staffType}">
-                            <f:selectItems var="type"
-                                           value="#{staffTypeBean.types}"
-                                           itemLabel="#{type.typeName}"
-                                           itemValue="#{type}">
-
-                            </f:selectItems>
-                        </h:selectOneMenu>
-                    </div>
-                    <div class="form-group">
-                        <h:inputHidden value="#{staffBean.inputId}"/>
+                        <h:inputHidden value="#{readerBean.inputId}"/>
                         <h:commandButton value="Add"
-                                         action="#{staffBean.addStaff()}"
+                                         action="#{readerBean.addStaff()}"
                                          styleClass="btn btn-warning"></h:commandButton>
                     </div>
                 </h:form>

@@ -51,10 +51,19 @@ public class ReaderCard implements Serializable {
     @Column(name = "end_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "borrow_date")
+    private Date borrowDate;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "return_date")
+    private Date returnDate;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "book_id", referencedColumnName = "id")
+    private Book book;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "readerCardId")
     private Collection<Reader> readerCollection;
-    @OneToMany(mappedBy = "readerCardId")
-    private Collection<BookBorrowed> bookBorrowedCollection;
 
     public ReaderCard() {
     }
@@ -93,13 +102,9 @@ public class ReaderCard implements Serializable {
         this.readerCollection = readerCollection;
     }
 
-    public Collection<BookBorrowed> getBookBorrowedCollection() {
-        return bookBorrowedCollection;
-    }
 
-    public void setBookBorrowedCollection(Collection<BookBorrowed> bookBorrowedCollection) {
-        this.bookBorrowedCollection = bookBorrowedCollection;
-    }
+
+
 
     @Override
     public int hashCode() {
@@ -125,5 +130,28 @@ public class ReaderCard implements Serializable {
     public String toString() {
         return "com.thien.ourproject.pojo.ReaderCard[ id=" + id + " ]";
     }
-    
+
+    public Date getBorrowDate() {
+        return borrowDate;
+    }
+
+    public void setBorrowDate(Date borrowDate) {
+        this.borrowDate = borrowDate;
+    }
+
+    public Date getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(Date returnDate) {
+        this.returnDate = returnDate;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
 }

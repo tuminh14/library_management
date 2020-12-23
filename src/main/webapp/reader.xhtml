@@ -17,29 +17,29 @@
         <ui:define name="content">
             <div class="container">
                 <h:form>
-                    <h1 class="text-center">#{readersMsg['reader.admin']}</h1>
+                    <h1 class="text-center">#{readerMsg['readers.admin']}</h1>
                     <div class="form-group">
-                        <h:outputLabel value="#{readersMsg['people.firstname']}"/>
+                        <h:outputLabel value="#{ppMsg['people.firstname']}"/>
                         <h:inputText id="txtFirstname"
                                      styleClass="form-control"
                                      value="#{peopleBean.firstname}"/>
                     </div>
                     <div class="form-group">
-                        <h:outputLabel value="#{readersMsg['people.lastname']}"/>
+                        <h:outputLabel value="#{ppMsg['people.lastname']}"/>
                         <h:inputText
                                 id="txtLastname"
                                 styleClass="form-control"
                                 value="#{peopleBean.lastname}"/>
                     </div>
                     <div class="form-group">
-                        <h:outputLabel value="#{readersMsg['people.gender']}"/>
+                        <h:outputLabel value="#{ppMsg['people.gender']}"/>
                         <h:inputText
                                 id="txtGender"
                                 styleClass="form-control"
                                 value="#{peopleBean.gender}"/>
                     </div>
                     <div class="form-group">
-                        <h:outputLabel value="#{readersMsg['people.address']}"/>
+                        <h:outputLabel value="#{ppMsg['people.address']}"/>
                         <h:inputText
                                 id="txtAddress"
                                 styleClass="form-control"
@@ -53,30 +53,9 @@
                                 value="#{peopleBean.contact}"/>
                     </div>
                     <div class="form-group">
-                        <h:outputLabel value="#{staffMsg['staffs.salary']}"/>
-                        <h:inputText
-                                id="txtsalary"
-                                styleClass="form-control"
-                                value="#{staffBean.salary}"/>
-                    </div>
-                    <div class="form-group">
-                        <h:outputLabel value="#{staffMsg['staffs.type']}"/>
-                        <h:selectOneMenu id="staffType"
-                                         styleClass="form-control"
-                                         converter="StaffTypeConverter"
-                                         value="#{staffBean.staffType}">
-                            <f:selectItems var="type"
-                                           value="#{staffTypeBean.types}"
-                                           itemLabel="#{type.typeName}"
-                                           itemValue="#{type}">
-
-                            </f:selectItems>
-                        </h:selectOneMenu>
-                    </div>
-                    <div class="form-group">
-                        <h:inputHidden value="#{staffBean.inputId}"/>
+                        <h:inputHidden value="#{readerBean.inputId}"/>
                         <h:commandButton value="Add"
-                                         action="#{staffBean.addStaff()}"
+                                         action="#{readerBean.addReader()}"
                                          styleClass="btn btn-warning"></h:commandButton>
                     </div>
                 </h:form>
