@@ -1,5 +1,6 @@
 package com.thien.ourproject.services;
 
+import com.thien.ourproject.pojo.People;
 import com.thien.ourproject.pojo.Reader;
 import com.thien.ourproject.pojo.ReaderCard;
 import com.thien.ourproject.pojo.StaffType;
@@ -43,6 +44,21 @@ public class ReaderCardServices {
             try {
                 session.getTransaction().begin();
                 session.saveOrUpdate(card);
+                session.getTransaction().commit();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                session.getTransaction().rollback();
+                return false;
+            }
+        }
+
+        return true;
+    }
+    public boolean delete(ReaderCard card) {
+        try ( Session session = factory.openSession()) {
+            try {
+                session.getTransaction().begin();
+                session.delete(card);
                 session.getTransaction().commit();
             } catch (Exception ex) {
                 ex.printStackTrace();

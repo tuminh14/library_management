@@ -1,5 +1,6 @@
 package com.thien.ourproject.services;
 
+import com.thien.ourproject.pojo.Book;
 import com.thien.ourproject.pojo.Reader;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,6 +9,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReaderServices {
@@ -61,9 +63,16 @@ public class ReaderServices {
     public boolean delete(Reader reader) {
         try ( Session session = factory.openSession()) {
             try {
-                session.getTransaction().begin();
-                session.delete(reader);
-                session.getTransaction().commit();
+                List <Book> bookList = new BookServices().getBooks(reader.getReaderCardId().getBookBorrowed().getBookTitle().getBookTitle());
+                Book book = bookList.get(0);
+                book.setBookCopies(book.getBookCopies() +1);
+                if(new BookServices().addOrSaveBook(book)){
+                    if(new PeopleServices().delete(reader.getPeopleId())){
+                        if (new ReaderCardServices().delete(reader.getReaderCardId())) {
+                            new ReaderServices().delete(reader);
+                        }
+                    }
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
                 session.getTransaction().rollback();
