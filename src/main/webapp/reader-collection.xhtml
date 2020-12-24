@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+>
+<h:head>
+    <title>Facelet Title</title>
+    <link rel="stylesheet" href="css/material-icons.css"/>
+</h:head>
+<h:body>
+    <ui:composition template="templates/base.xhtml">
+        <ui:define name="header">
+
+        </ui:define>
+        <ui:define name="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="left-sidebar">
+                            <h2>#{readerMsg["readers.reader"]}</h2>
+                            <div class="panel-group category-products" id="accordian">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <h:link outcome="reader-collection?face-redirect=true" styleClass="nav-link" value="All">
+                                            <f:param name="all" value=""></f:param>
+                                        </h:link>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div><!--/category-products-->
+                    </div>
+
+                    <div class="col-sm-9 padding-right">
+                        <div class="features_items"><!--features_items-->
+                            <h2 class="title text-center">#{readerMsg["readers.list"]}</h2>
+                            <div class="col-sm-12">
+                                <div>
+                                    <div class="col-sm-6">
+                                        <h:link styleClass="btn btn-warning" value="#{readerMsg['readers.add']}"
+                                                outcome="reader.xhtml?faces-redirect=true"/>
+                                    </div>
+                                    <div class="col-sm-4" >
+                                        <h:form>
+                                            <div class="row">
+                                                <div class="col-md-10 form-group">
+                                                    <h:inputText styleClass="form-control" value="#{readerBean.keyword}"></h:inputText>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <h:commandButton class="btn btn-default" value="Search"></h:commandButton>
+                                                </div>
+
+                                            </div>
+                                        </h:form>
+                                    </div>
+                                </div>
+                                <div class="container" style="width: 90% !important;">
+
+
+                                    <table class="table">
+                                        <tr>
+                                            <th>#{readerMsg["readers.id"]}</th>
+                                            <th>#{ppMsg["people.lastname"]}</th>
+                                            <th>#{ppMsg["people.firstname"]}</th>
+                                            <th>#{ppMsg["people.gender"]}</th>
+                                            <th>#{ppMsg["people.contact"]}</th>
+                                            <th>#{ppMsg["people.address"]}</th>
+                                            <th style="width: 15%"></th>
+                                        </tr>
+                                        <c:forEach var="reader" items="#{readerBean.readers}">
+                                            <tr>
+                                                <td>#{reader.id}</td>
+                                                <td>#{reader.peopleId.lastname}</td>
+                                                <td>#{reader.peopleId.firstname}</td>
+                                                <td>#{reader.peopleId.gender}</td>
+                                                <td>#{reader.peopleId.contact}</td>
+                                                <td>#{reader.peopleId.address}</td>
+                                                <td>
+                                                    <h:link outcome="reader.xhtml?faces-redirect=true" >
+                                                        <f:param name="reader_id" value="#{reader.id}"></f:param>
+                                                        <i class="fa fa-pencil"></i>
+                                                    </h:link>
+
+
+                                                    <h:commandLink action="reader-collection.xhtml?faces-redirect=true">
+                                                        <i class="fa fa-trash"></i>
+                                                        <f:ajax listener="#{readerBean.delete(reader)}"
+                                                                onevent="deleteSuccess"
+                                                                onerror="deleteError"
+
+                                                        />
+                                                    </h:commandLink>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div><!--features_items-->
+
+                    </div>
+                </div>
+            </div>
+            <script>
+                function deleteSuccess() {
+                    alert("Xoa thanh cong");
+
+                }
+
+                function deleteError() {
+                    alert("Xoa that bai")
+                }
+            </script>
+        </ui:define>
+        <ui:define name="contact">
+
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
+

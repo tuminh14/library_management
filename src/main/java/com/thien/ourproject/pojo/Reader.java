@@ -6,17 +6,7 @@
 package com.thien.ourproject.pojo;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -41,11 +31,9 @@ public class Reader implements Serializable {
     @ManyToOne(optional = false)
     private People peopleId;
     @JoinColumn(name = "reader_card_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @OneToOne(optional = false)
     private ReaderCard readerCardId;
-    @JoinColumn(name = "type_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private ReaderType typeId;
+
 
     public Reader() {
     }
@@ -78,13 +66,6 @@ public class Reader implements Serializable {
         this.readerCardId = readerCardId;
     }
 
-    public ReaderType getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(ReaderType typeId) {
-        this.typeId = typeId;
-    }
 
     @Override
     public int hashCode() {
