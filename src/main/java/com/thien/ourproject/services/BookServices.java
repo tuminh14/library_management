@@ -39,7 +39,6 @@ public class BookServices {
                 Predicate p2 = builder.like(root.get("author").as(String.class), p);
 
                 query = query.where(builder.or(p1, p2));
-                System.out.println("test");
             }
 
             return session.createQuery(query).getResultList();
