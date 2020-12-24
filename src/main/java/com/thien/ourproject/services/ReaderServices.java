@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.thien.ourproject.services;
 
-import com.thien.ourproject.pojo.Staff;
+import com.thien.ourproject.pojo.Book;
+import com.thien.ourproject.pojo.Reader;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -13,17 +9,17 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
-public class StaffServices {
-
+public class ReaderServices {
     private final static SessionFactory factory = HibernateUtils.getFACTORY();
 
-    public List<Staff> getAll(String kw) {
+    public List<Reader> getAll(String kw) {
         try ( Session session = factory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery query = builder.createQuery();
-            Root<Staff> root = query.from(Staff.class);
+            Root<Reader> root = query.from(Reader.class);
 
             query = query.select(root);
 
@@ -42,17 +38,17 @@ public class StaffServices {
         }
     }
 
-    public Staff getById(int id) {
+    public Reader getById(int id) {
         try ( Session session = factory.openSession()) {
-            return session.get(Staff.class, id);
+            return session.get(Reader.class, id);
         }
     }
 
-    public boolean addOrSave(Staff staff) {
+    public boolean addOrSave(Reader reader) {
         try ( Session session = factory.openSession()) {
             try {
                 session.getTransaction().begin();
-                session.saveOrUpdate(staff);
+                session.saveOrUpdate(reader);
                 session.getTransaction().commit();
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -63,13 +59,20 @@ public class StaffServices {
 
         return true;
     }
-    
-    public boolean delete(Staff staff) {
+
+    public boolean delete(Reader reader) {
         try ( Session session = factory.openSession()) {
             try {
-                session.getTransaction().begin();
-                session.delete(staff);
-                session.getTransaction().commit();
+                List <Book> bookList = new BookServices().getBooks(reader.getReaderCardId().getBookBorrowed().getBookTitle().getBookTitle());
+                Book book = bookList.get(0);
+                book.setBookCopies(book.getBookCopies() +1);
+                if(new BookServices().addOrSaveBook(book)){
+                    if(new PeopleServices().delete(reader.getPeopleId())){
+                        if (new ReaderCardServices().delete(reader.getReaderCardId())) {
+                            new ReaderServices().delete(reader);
+                        }
+                    }
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
                 session.getTransaction().rollback();

@@ -8,20 +8,7 @@ package com.thien.ourproject.pojo;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -36,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "BookBorrowed.findAll", query = "SELECT b FROM BookBorrowed b"),
     @NamedQuery(name = "BookBorrowed.findById", query = "SELECT b FROM BookBorrowed b WHERE b.id = :id"),
-    @NamedQuery(name = "BookBorrowed.findByBookId", query = "SELECT b FROM BookBorrowed b WHERE b.bookId = :bookId"),
+    @NamedQuery(name = "BookBorrowed.findByBookTitle", query = "SELECT b FROM BookBorrowed b WHERE b.bookTitle = :bookTitle"),
     @NamedQuery(name = "BookBorrowed.findByBorrowDate", query = "SELECT b FROM BookBorrowed b WHERE b.borrowDate = :borrowDate"),
     @NamedQuery(name = "BookBorrowed.findByReturnDate", query = "SELECT b FROM BookBorrowed b WHERE b.returnDate = :returnDate")})
 public class BookBorrowed implements Serializable {
@@ -49,10 +36,6 @@ public class BookBorrowed implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "book_id")
-    private int bookId;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "borrow_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date borrowDate;
@@ -60,11 +43,14 @@ public class BookBorrowed implements Serializable {
     @Column(name = "return_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date returnDate;
-    
-
     @JoinColumn(name = "reader_card_id", referencedColumnName = "id")
-    @ManyToOne
+    @OneToOne
     private ReaderCard readerCardId;
+    @JoinColumn(name = "book_title", referencedColumnName = "book_title")
+    @ManyToOne
+    private Book bookTitle;
+
+
     
     public BookBorrowed() {
     }
@@ -73,11 +59,11 @@ public class BookBorrowed implements Serializable {
         this.id = id;
     }
 
-    public BookBorrowed(Integer id, int bookId, Date borrowDate, Date returnDate) {
+    public BookBorrowed(Integer id, Book bookId, Date borrowDate, Date returnDate) {
         this.id = id;
-        this.bookId = bookId;
         this.borrowDate = borrowDate;
         this.returnDate = returnDate;
+        this.bookTitle = bookTitle;
     }
 
     public Integer getId() {
@@ -88,13 +74,6 @@ public class BookBorrowed implements Serializable {
         this.id = id;
     }
 
-    public int getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
-    }
 
     public Date getBorrowDate() {
         return borrowDate;
@@ -146,5 +125,12 @@ public class BookBorrowed implements Serializable {
     public String toString() {
         return "com.thien.ourproject.pojo.BookBorrowed[ id=" + id + " ]";
     }
-    
+
+    public Book getBookTitle() {
+        return bookTitle;
+    }
+
+    public void setBookTitle(Book bookTitle) {
+        this.bookTitle = bookTitle;
+    }
 }

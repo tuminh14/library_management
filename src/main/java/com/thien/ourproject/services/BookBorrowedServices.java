@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.thien.ourproject.services;
 
+import com.thien.ourproject.pojo.BookBorrowed;
 import com.thien.ourproject.pojo.Staff;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,15 +11,14 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-public class StaffServices {
-
+public class BookBorrowedServices {
     private final static SessionFactory factory = HibernateUtils.getFACTORY();
 
-    public List<Staff> getAll(String kw) {
+    public List<BookBorrowed> getAll(String kw) {
         try ( Session session = factory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery query = builder.createQuery();
-            Root<Staff> root = query.from(Staff.class);
+            Root<BookBorrowed> root = query.from(BookBorrowed.class);
 
             query = query.select(root);
 
@@ -42,17 +37,17 @@ public class StaffServices {
         }
     }
 
-    public Staff getById(int id) {
+    public BookBorrowed getById(int id) {
         try ( Session session = factory.openSession()) {
-            return session.get(Staff.class, id);
+            return session.get(BookBorrowed.class, id);
         }
     }
 
-    public boolean addOrSave(Staff staff) {
+    public boolean addOrSave(BookBorrowed bookBorrowed) {
         try ( Session session = factory.openSession()) {
             try {
                 session.getTransaction().begin();
-                session.saveOrUpdate(staff);
+                session.saveOrUpdate(bookBorrowed);
                 session.getTransaction().commit();
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -63,12 +58,12 @@ public class StaffServices {
 
         return true;
     }
-    
-    public boolean delete(Staff staff) {
+
+    public boolean delete(BookBorrowed bookBorrowed) {
         try ( Session session = factory.openSession()) {
             try {
                 session.getTransaction().begin();
-                session.delete(staff);
+                session.delete(bookBorrowed);
                 session.getTransaction().commit();
             } catch (Exception ex) {
                 ex.printStackTrace();

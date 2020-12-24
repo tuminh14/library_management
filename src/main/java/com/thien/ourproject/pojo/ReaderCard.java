@@ -8,21 +8,7 @@ package com.thien.ourproject.pojo;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -51,10 +37,10 @@ public class ReaderCard implements Serializable {
     @Column(name = "end_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "readerCardId")
-    private Collection<Reader> readerCollection;
-    @OneToMany(mappedBy = "readerCardId")
-    private Collection<BookBorrowed> bookBorrowedCollection;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "readerCardId")
+    private Reader reader;
+    @OneToOne(mappedBy = "readerCardId")
+    private BookBorrowed bookBorrowed;
 
     public ReaderCard() {
     }
@@ -85,21 +71,8 @@ public class ReaderCard implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Reader> getReaderCollection() {
-        return readerCollection;
-    }
 
-    public void setReaderCollection(Collection<Reader> readerCollection) {
-        this.readerCollection = readerCollection;
-    }
 
-    public Collection<BookBorrowed> getBookBorrowedCollection() {
-        return bookBorrowedCollection;
-    }
-
-    public void setBookBorrowedCollection(Collection<BookBorrowed> bookBorrowedCollection) {
-        this.bookBorrowedCollection = bookBorrowedCollection;
-    }
 
     @Override
     public int hashCode() {
@@ -125,5 +98,20 @@ public class ReaderCard implements Serializable {
     public String toString() {
         return "com.thien.ourproject.pojo.ReaderCard[ id=" + id + " ]";
     }
-    
+
+    public Reader getReader() {
+        return reader;
+    }
+
+    public void setReader(Reader reader) {
+        this.reader = reader;
+    }
+
+    public BookBorrowed getBookBorrowed() {
+        return bookBorrowed;
+    }
+
+    public void setBookBorrowed(BookBorrowed bookBorrowed) {
+        this.bookBorrowed = bookBorrowed;
+    }
 }

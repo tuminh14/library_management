@@ -1,58 +1,49 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.thien.ourproject.services;
 
-import com.thien.ourproject.pojo.Staff;
+import com.thien.ourproject.pojo.People;
+import com.thien.ourproject.pojo.Reader;
+import com.thien.ourproject.pojo.ReaderCard;
+import com.thien.ourproject.pojo.StaffType;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-public class StaffServices {
-
+public class ReaderCardServices {
     private final static SessionFactory factory = HibernateUtils.getFACTORY();
 
-    public List<Staff> getAll(String kw) {
+    public List<ReaderCard> getAll() {
         try ( Session session = factory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery query = builder.createQuery();
-            Root<Staff> root = query.from(Staff.class);
+            Root<StaffType> root = query.from(ReaderCard.class);
 
             query = query.select(root);
 
-            if (kw != null && !kw.isEmpty()) {
-                String p = String.format("%%%s%%", kw);
-                Predicate p1 = builder.like(root.get("people").get("lastname").as(String.class), p);
-                Predicate p2 = builder.like(root.get("people").get("firstname").as(String.class), p);
-                Predicate p3 = builder.like(root.get("people").get("gender").as(String.class), p);
-                Predicate p4 = builder.like(root.get("people").get("contact").as(String.class), p);
-                Predicate p5 = builder.like(root.get("people").get("address").as(String.class), p);
-
-                query = query.where(builder.or(p1, p2, p3, p4, p5));
-            }
-
-            return session.createQuery(query).getResultList();
+            Query q = session.createQuery(query);
+            return q.getResultList();
         }
     }
 
-    public Staff getById(int id) {
+    public ReaderCard getById(int id) {
         try ( Session session = factory.openSession()) {
-            return session.get(Staff.class, id);
+            return session.get(ReaderCard.class, id);
         }
     }
 
-    public boolean addOrSave(Staff staff) {
+    public ReaderCard getById(String id) {
+        return this.getById(Integer.parseInt(id));
+    }
+
+    public boolean addOrSave(ReaderCard card) {
         try ( Session session = factory.openSession()) {
             try {
                 session.getTransaction().begin();
-                session.saveOrUpdate(staff);
+                session.saveOrUpdate(card);
                 session.getTransaction().commit();
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -63,12 +54,11 @@ public class StaffServices {
 
         return true;
     }
-    
-    public boolean delete(Staff staff) {
+    public boolean delete(ReaderCard card) {
         try ( Session session = factory.openSession()) {
             try {
                 session.getTransaction().begin();
-                session.delete(staff);
+                session.delete(card);
                 session.getTransaction().commit();
             } catch (Exception ex) {
                 ex.printStackTrace();
