@@ -1,6 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <div class="header-bottom"><!--header-bottom-->
         <div class="container">
             <div class="row">
@@ -15,14 +16,13 @@
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><h:link outcome="index?face-redirect=true" class="active" value="Home"></h:link> </li>
-                            <li><a href="faces/library-collection.xhtml?faces-redirect=true">Library Collection</a></li>
-                            <li><a href="faces/staff-collection.xhtml?faces-redirect=true">Staff</a></li>
-
-
-
+                            <li><h:link outcome="index?face-redirect=true" class="active" value="Trang chủ"></h:link> </li>
+                            <c:if test="#{facesContext.externalContext.sessionMap.get('user') != null }">
+                                <li><a href="faces/library-collection.xhtml?faces-redirect=true">Bộ sưu tập</a></li>
+                                <li><a href="faces/staff-collection.xhtml?faces-redirect=true">Nhân viên</a></li>
+                            </c:if>
                         </ul>
-                        
+
                     </div>
                 </div>
             </div>

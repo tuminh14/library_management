@@ -20,7 +20,7 @@
                     <div class="row">
                         <div class="col-sm-2">
                             <div class="left-sidebar">
-                                <h2>Category</h2>
+                                <h2>Thể loại</h2>
                                 <div class="panel-group category-products" id="accordian">
                                     <c:forEach var="cates" items="#{categoryBean.categories}">
                                         <div class="panel panel-default">
@@ -35,7 +35,7 @@
                                     </c:forEach>
                                 </div><!--/category-products-->
                                 <div class="brands_products"><!--brands_products-->
-                                    <h2>Authors</h2>
+                                    <h2>Tác giả</h2>
                                     <div class="brands-name">
                                         <ul class="nav nav-pills nav-stacked">
                                             <c:forEach var="author" items="#{bookBean.authors}">
@@ -49,13 +49,13 @@
                         </div>
                         <div class="col-sm-10 padding-right">
                             <div class="features_items"><!--features_items-->
-                                <h2 class="title text-center">Features Items</h2>
+                                <h2 class="title text-center">Danh sách</h2>
                                 <c:forEach var="book" items="#{bookBean.topBooks}">
                                     <div class="col-sm-4">
                                         <div class="product-image-wrapper">
                                                 <div class="single-products">
                                                     <div class="productinfo text-center">
-                                                        <h:graphicImage name="images/home/product1.jpg" alt="" />
+                                                        <h:graphicImage name="images/home/book2.png" alt="" />
                                                         <h2>#{book.bookTitle}</h2>
                                                         <p>#{book.author}</p>
                                                         <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>

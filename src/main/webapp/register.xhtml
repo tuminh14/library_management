@@ -22,17 +22,21 @@
                             <h:outputLabel value="Tên đăng nhập"/>
                             <h:inputText id="txtUsername" 
                                          styleClass="form-control"
-                                         value="#{userBean.username}"/>
+                                         value="#{userBean.username}"
+                                         required="true"
+                                         requiredMessage="Chưa nhập tên đăng nhập"/>
                         </div>
                         <div class="form-group">
                             <h:outputLabel value="Mật khẩu"/>
                             <h:inputSecret
                                 id="txtPassword" 
                                 styleClass="form-control"
-                                value="#{userBean.password}"/>
+                                value="#{userBean.password}"
+                                required="true"
+                                requiredMessage="Chưa nhập mật khẩu"/>
                         </div>
                         <div class="form-group">
-                            <h:commandButton value="Signup"
+                            <h:commandButton value="Đăng ký"
                                              action="#{userBean.register()}"
                                              styleClass="btn btn-warning"></h:commandButton>
                         </div>

@@ -34,7 +34,7 @@
                                     <li>
                                         <c:if test="#{facesContext.externalContext.sessionMap.get('user') != null }">
 
-                                            <h:commandLink action="#{userBean.logout()}" value="#{facesContext.externalContext.sessionMap.get('user').username}">
+                                            <h:commandLink value="#{facesContext.externalContext.sessionMap.get('user').username}">
                                                 <i class="fa fa-user"></i>
                                             </h:commandLink>
                                             <h:commandLink action="#{userBean.logout()}" value="Đăng xuất">
