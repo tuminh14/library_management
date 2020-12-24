@@ -17,7 +17,6 @@ import org.hibernate.SessionFactory;
 public class CategoryServices {
 
     private final static SessionFactory factory = HibernateUtils.getFACTORY();
-
     public List<Category> getCates() {
         try ( Session session = factory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();

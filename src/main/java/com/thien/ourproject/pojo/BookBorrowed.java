@@ -47,10 +47,10 @@ public class BookBorrowed implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
     @NotNull
-    @Column(name = "book_id")
-    private int bookId;
+    @JoinColumn(name = "book_id", referencedColumnName = "id")
+    @ManyToOne
+    private Book bookId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "borrow_date")
@@ -60,11 +60,14 @@ public class BookBorrowed implements Serializable {
     @Column(name = "return_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date returnDate;
-    
-
     @JoinColumn(name = "reader_card_id", referencedColumnName = "id")
     @ManyToOne
     private ReaderCard readerCardId;
+    @JoinColumn(name = "book_title", referencedColumnName = "bookTitle")
+    @ManyToOne
+    private Book bookTitle;
+
+
     
     public BookBorrowed() {
     }
@@ -73,7 +76,7 @@ public class BookBorrowed implements Serializable {
         this.id = id;
     }
 
-    public BookBorrowed(Integer id, int bookId, Date borrowDate, Date returnDate) {
+    public BookBorrowed(Integer id, Book bookId, Date borrowDate, Date returnDate) {
         this.id = id;
         this.bookId = bookId;
         this.borrowDate = borrowDate;
@@ -88,11 +91,11 @@ public class BookBorrowed implements Serializable {
         this.id = id;
     }
 
-    public int getBookId() {
+    public Book getBookId() {
         return bookId;
     }
 
-    public void setBookId(int bookId) {
+    public void setBookId(Book bookId) {
         this.bookId = bookId;
     }
 

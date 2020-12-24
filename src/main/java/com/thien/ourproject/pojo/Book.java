@@ -6,20 +6,9 @@
 package com.thien.ourproject.pojo;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -82,6 +71,8 @@ public class Book implements Serializable {
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ManyToOne
     private Category categoryId;
+    @OneToMany(mappedBy ="bookTitle")
+    private Collection<BookBorrowed> bookBorrowedCollection;
 
     public Book() {
     }
@@ -210,5 +201,12 @@ public class Book implements Serializable {
     public String toString() {
         return "com.thien.ourproject.pojo.Book[ id=" + id + " ]";
     }
-    
+
+    public Collection<BookBorrowed> getBookBorrowedCollection() {
+        return bookBorrowedCollection;
+    }
+
+    public void setBookBorrowedCollection(Collection<BookBorrowed> bookBorrowedCollection) {
+        this.bookBorrowedCollection = bookBorrowedCollection;
+    }
 }

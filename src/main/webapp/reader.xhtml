@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:b="http://bootsfaces.net/ui">
 <h:head>
     <title>Facelet Title</title>
 
@@ -17,29 +18,29 @@
         <ui:define name="content">
             <div class="container">
                 <h:form>
-                    <h1 class="text-center">#{readersMsg['reader.admin']}</h1>
+                    <h1 class="text-center">#{readerMsg['readers.admin']}</h1>
                     <div class="form-group">
-                        <h:outputLabel value="#{readersMsg['people.firstname']}"/>
+                        <h:outputLabel value="#{ppMsg['people.firstname']}"/>
                         <h:inputText id="txtFirstname"
                                      styleClass="form-control"
                                      value="#{peopleBean.firstname}"/>
                     </div>
                     <div class="form-group">
-                        <h:outputLabel value="#{readersMsg['people.lastname']}"/>
+                        <h:outputLabel value="#{ppMsg['people.lastname']}"/>
                         <h:inputText
                                 id="txtLastname"
                                 styleClass="form-control"
                                 value="#{peopleBean.lastname}"/>
                     </div>
                     <div class="form-group">
-                        <h:outputLabel value="#{readersMsg['people.gender']}"/>
+                        <h:outputLabel value="#{ppMsg['people.gender']}"/>
                         <h:inputText
                                 id="txtGender"
                                 styleClass="form-control"
                                 value="#{peopleBean.gender}"/>
                     </div>
                     <div class="form-group">
-                        <h:outputLabel value="#{readersMsg['people.address']}"/>
+                        <h:outputLabel value="#{ppMsg['people.address']}"/>
                         <h:inputText
                                 id="txtAddress"
                                 styleClass="form-control"
@@ -53,30 +54,26 @@
                                 value="#{peopleBean.contact}"/>
                     </div>
                     <div class="form-group">
-                        <h:outputLabel value="#{staffMsg['staffs.salary']}"/>
-                        <h:inputText
-                                id="txtsalary"
-                                styleClass="form-control"
-                                value="#{staffBean.salary}"/>
-                    </div>
-                    <div class="form-group">
-                        <h:outputLabel value="#{staffMsg['staffs.type']}"/>
-                        <h:selectOneMenu id="staffType"
+                        <h:outputLabel value="#{bMsg['books.add']}"/>
+                        <h:selectOneMenu id="bookId"
                                          styleClass="form-control"
-                                         converter="StaffTypeConverter"
-                                         value="#{staffBean.staffType}">
-                            <f:selectItems var="type"
-                                           value="#{staffTypeBean.types}"
-                                           itemLabel="#{type.typeName}"
-                                           itemValue="#{type}">
-
+                                         value="#{readerBean.bookId}">
+                            <f:selectItems var="book"
+                                           value="#{readerBean.books}"
+                                           itemLabel="#{book.bookTitle}"
+                                           itemValue="#{book.id}">
                             </f:selectItems>
                         </h:selectOneMenu>
                     </div>
+
+
+                    <b:dateTimePicker id="endDateId" fieldId="evenGreaterFieldId" value="#{readerBean.endDate}" iconAwesome="bolt" label="#{readerMsg['readers.endDate']}"  />
+                    <b:dateTimePicker id="returnDateId" fieldId="evenGreaterFieldId" value="#{readerBean.returnDate}" iconAwesome="bolt" label="#{readerMsg['readers.returnDate']}"  />
+
                     <div class="form-group">
-                        <h:inputHidden value="#{staffBean.inputId}"/>
+                        <h:inputHidden value="#{readerBean.inputId}"/>
                         <h:commandButton value="Add"
-                                         action="#{staffBean.addStaff()}"
+                                         action="#{readerBean.addReader()}"
                                          styleClass="btn btn-warning"></h:commandButton>
                     </div>
                 </h:form>
