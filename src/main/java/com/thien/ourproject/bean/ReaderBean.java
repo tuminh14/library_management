@@ -37,6 +37,7 @@ public class ReaderBean {
     private final static ReaderServices readerServices = new ReaderServices();
     private final static ReaderCardServices readerCardServices = new ReaderCardServices();
     private final static BookBorrowedServices bookBorrowedServices = new BookBorrowedServices();
+    private final static BookServices bookServices = new BookServices();
 
 
 
@@ -98,11 +99,10 @@ public class ReaderBean {
 
         ELContext elContext = FacesContext.getCurrentInstance().getELContext();
         PeopleBean peopleBean = (PeopleBean) elContext.getELResolver().getValue(elContext, null, "peopleBean");
-
+        Book book = new BookServices().getBookById(bookId);
         People people = peopleBean.add();
-        if(returnDate != null && bookBorrow !=null){
-            Book book = new BookServices().getBookById(bookId);
-            bookBorrow.setBookId(book);
+        if(returnDate != null && bookBorrow !=null && book != null){
+            bookBorrow.setBookTitle(book);
             bookBorrow.setReturnDate(returnDate);
             bookBorrow.setBorrowDate(new Date());
         }
@@ -111,8 +111,13 @@ public class ReaderBean {
             if(bookBorrowedServices.addOrSave(bookBorrow)){
                 card.setEndDate(endDate);
                 if (readerCardServices.addOrSave(card)) {
+                    bookBorrow.setReaderCardId(card);
+                    bookBorrowedServices.addOrSave(bookBorrow);
+                    reader.setReaderCardId(card);
                     if (readerServices.addOrSave(reader)){
-                        return "staff-collection.xhtml?faces-redirect=true";
+                        book.setBookCopies(book.getBookCopies() -1);
+                        bookServices.addOrSaveBook(book);
+                        return "reader-collection.xhtml?faces-redirect=true";
                     }
 
                 }
@@ -138,6 +143,7 @@ public class ReaderBean {
     }
 
     public String delete(Reader reader) throws Exception {
+
         if (readerServices.delete(reader)) {
             return "Successful";
         }

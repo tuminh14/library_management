@@ -49,8 +49,8 @@ public class HibernateUtils {
         props.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5InnoDBDialect");
         props.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
         props.put(Environment.URL, "jdbc:mysql://localhost/library_management?createDatabaseIfNotExist=true&useSSL=true");
-        props.put(Environment.USER, "root");
-        props.put(Environment.PASS, "root");
+        props.put(Environment.USER, "tuminh14");
+        props.put(Environment.PASS, "14061999");
         props.put(Environment.SHOW_SQL, true);
         props.put(Environment.HBM2DDL_AUTO, "update");
         conf.setProperties(props);

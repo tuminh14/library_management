@@ -39,8 +39,8 @@ public class ReaderCard implements Serializable {
     private Date endDate;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "readerCardId")
     private Reader reader;
-    @OneToMany(mappedBy = "readerCardId")
-    private Collection<BookBorrowed> bookBorrowedCollection;
+    @OneToOne(mappedBy = "readerCardId")
+    private BookBorrowed bookBorrowed;
 
     public ReaderCard() {
     }
@@ -72,13 +72,7 @@ public class ReaderCard implements Serializable {
 
     @XmlTransient
 
-    public Collection<BookBorrowed> getBookBorrowedCollection() {
-        return bookBorrowedCollection;
-    }
 
-    public void setBookBorrowedCollection(Collection<BookBorrowed> bookBorrowedCollection) {
-        this.bookBorrowedCollection = bookBorrowedCollection;
-    }
 
     @Override
     public int hashCode() {
@@ -111,5 +105,13 @@ public class ReaderCard implements Serializable {
 
     public void setReader(Reader reader) {
         this.reader = reader;
+    }
+
+    public BookBorrowed getBookBorrowed() {
+        return bookBorrowed;
+    }
+
+    public void setBookBorrowed(BookBorrowed bookBorrowed) {
+        this.bookBorrowed = bookBorrowed;
     }
 }
